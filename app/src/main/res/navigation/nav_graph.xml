@@ -8,6 +8,22 @@
     <fragment
         android:id="@+id/termsListFragment"
         android:name="com.example.termdictionary.presentation.ui.terms_list.TermsListFragment"
-        android:label="fragment_terms_list"
-        tools:layout="@layout/fragment_terms_list" />
+        android:label="@string/terms"
+        tools:layout="@layout/fragment_terms_list">
+        <action
+            android:id="@+id/action_termsListFragment_to_termDetailFragment"
+            app:destination="@id/termDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termDetailFragment"
+        android:name="com.example.termdictionary.presentation.ui.term_details.TermDetailsFragment"
+        android:label="{term_name}"
+        tools:layout="@layout/fragment_term_details">
+        <argument
+            android:name="term"
+            app:argType="com.example.termdictionary.presentation.model.TermUI" />
+        <argument
+            android:name="term_name"
+            app:argType="string" />
+    </fragment>
 </navigation>

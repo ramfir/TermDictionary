@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android.extensions' // for parcelable class
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -31,6 +33,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    androidExtensions {
+        experimental = true // for parcelable class
     }
 }
 

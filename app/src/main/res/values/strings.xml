@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TermDictionary</string>
+    <string name="terms">Terms</string>
+    <string name="term_detail">Term Details</string>
 </resources>
