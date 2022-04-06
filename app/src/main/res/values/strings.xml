@@ -2,4 +2,13 @@
     <string name="app_name">TermDictionary</string>
     <string name="terms">Terms</string>
     <string name="term_detail">Term Details</string>
+    <string name="open">Открыть</string>
+    <string name="close">Закрыть</string>
+    <string name="chosen">Избранное</string>
+    <string name="test">Тест</string>
+    <string name="add_term">Добавить термин</string>
+    <string name="extract_terms">Выделить термины из текста</string>
+    <string name="settings">Настройки</string>
+    <string name="import_terms">Импорт новых терминов</string>
+    <string name="contact">Обратная связь</string>
 </resources>
