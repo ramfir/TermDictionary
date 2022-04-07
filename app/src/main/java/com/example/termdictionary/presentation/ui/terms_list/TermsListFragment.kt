@@ -17,6 +17,9 @@ import com.example.termdictionary.presentation.model.TermUI
 
 class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapter.OnItemClickListener {
 
+    private var _binding: FragmentTermsListBinding? = null
+    private val binding get() = _binding!!
+
     private val terms = listOf(
         TermUI("Абсцисса"),
         TermUI("Аксиома"),
@@ -30,10 +33,12 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentTermsListBinding.bind(view)
 
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentTermsListBinding.bind(view)
+
+        // FIXME() toggle button disappears after closing filter dialog
+        setHasOptionsMenu(true)
         initNavigationDrawer(binding)
 
         binding.termsListRecyclerView.adapter = TermsListAdapter(terms, this)
