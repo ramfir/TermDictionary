@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_termsListFragment_to_termDetailFragment"
             app:destination="@id/termDetailFragment" />
+        <action
+            android:id="@+id/action_termsListFragment_to_termsListFilterFragment"
+            app:destination="@id/termsListFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -26,4 +29,9 @@
             android:name="term_name"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/termsListFilterFragment"
+        android:name="com.example.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment"
+        android:label="fragment_filter_terms_list"
+        tools:layout="@layout/fragment_filter_terms_list" />
 </navigation>

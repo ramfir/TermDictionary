@@ -78,6 +78,8 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
         when(item.itemId) {
             R.id.action_filter -> {
                 Toast.makeText(requireContext(), "Фильтр", Toast.LENGTH_SHORT).show()
+                val action = TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
+                findNavController().navigate(action)
                 return true
             }
         }
