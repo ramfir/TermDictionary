@@ -84,8 +84,12 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onItemClick(term: TermUI) {
-        val action = TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(term, term.name)
-        findNavController().navigate(action)
+    override fun onItemClick(term: TermUI, changeChosenState: Boolean) {
+        if (changeChosenState) {
+            Toast.makeText(requireContext(), "Добавлено в избранное", Toast.LENGTH_SHORT).show()
+        } else {
+            val action = TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(term, term.name)
+            findNavController().navigate(action)
+        }
     }
 }

@@ -33,6 +33,13 @@ class TermsListAdapter(
                     listener.onItemClick(term)
                 }
             }
+            binding.chosenTermImageView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val term = terms[position]
+                    listener.onItemClick(term, true)
+                }
+            }
         }
 
         fun bind(term: TermUI) {
@@ -41,6 +48,6 @@ class TermsListAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(term: TermUI)
+        fun onItemClick(term: TermUI, changeChosenState: Boolean = false)
     }
 }
