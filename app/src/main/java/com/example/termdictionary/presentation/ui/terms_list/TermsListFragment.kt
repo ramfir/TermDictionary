@@ -58,7 +58,11 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
                     findNavController().navigate(action)
                 }
                 R.id.test -> Toast.makeText(requireContext(), R.string.test, Toast.LENGTH_SHORT).show()
-                R.id.add_term -> Toast.makeText(requireContext(), R.string.add_term, Toast.LENGTH_SHORT).show()
+                R.id.add_term -> {
+                    Toast.makeText(requireContext(), R.string.add_term, Toast.LENGTH_SHORT).show()
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment()
+                    findNavController().navigate(action)
+                }
                 R.id.extract_term -> Toast.makeText(requireContext(), R.string.extract_terms, Toast.LENGTH_SHORT).show()
                 R.id.settings -> Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
                 R.id.import_terms -> Toast.makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT).show()

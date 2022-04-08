@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_termsListFragment_to_chosenTermsFragment"
             app:destination="@id/chosenTermsFragment" />
+        <action
+            android:id="@+id/action_termsListFragment_to_addTermFragment"
+            app:destination="@id/addTermFragment" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -46,4 +49,9 @@
             android:id="@+id/action_chosenTermsFragment_to_termDetailFragment"
             app:destination="@id/termDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addTermFragment"
+        android:name="com.example.termdictionary.presentation.ui.add_term.AddTermFragment"
+        android:label="@string/add_term"
+        tools:layout="@layout/fragment_add_term" />
 </navigation>
