@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="@color/white"
             android:text="Добавить"
             android:textAllCaps="false"
             android:textColor="@color/red_500"

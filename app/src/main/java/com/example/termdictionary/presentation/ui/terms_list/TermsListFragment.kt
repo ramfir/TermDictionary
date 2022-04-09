@@ -53,13 +53,14 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.chosen_terms -> {
-                    Toast.makeText(requireContext(), R.string.chosen, Toast.LENGTH_SHORT).show()
                     val action = TermsListFragmentDirections.actionTermsListFragmentToChosenTermsFragment()
                     findNavController().navigate(action)
                 }
-                R.id.test -> Toast.makeText(requireContext(), R.string.test, Toast.LENGTH_SHORT).show()
+                R.id.test -> {
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToTestFragment()
+                    findNavController().navigate(action)
+                }
                 R.id.add_term -> {
-                    Toast.makeText(requireContext(), R.string.add_term, Toast.LENGTH_SHORT).show()
                     val action = TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment()
                     findNavController().navigate(action)
                 }

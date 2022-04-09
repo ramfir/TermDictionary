@@ -11,6 +11,7 @@
     <string name="settings">Настройки</string>
     <string name="import_terms">Импорт новых терминов</string>
     <string name="contact">Обратная связь</string>
+    <string name="question">Утверждение, которое принимается без доказательства и является исходным для доказательства других утверждений называется:</string>
 
     <string-array name="majors">
         <item>Прикладная информатика</item>
