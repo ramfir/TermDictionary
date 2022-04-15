@@ -25,9 +25,8 @@ class TermsListFilterFragment: DialogFragment(R.layout.fragment_filter_terms_lis
 
         binding.buttonApplyFilter.setOnClickListener{
             val major = binding.autoCompleteTextViewMajor.text
-            val semester = binding.autoCompleteTextViewSemester.text
             val subject = binding.autoCompleteTextViewSubject.text
-            Toast.makeText(requireContext(), "$major\n$semester\n$subject", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "$major\n$subject", Toast.LENGTH_SHORT).show()
             dismiss()
         }
         return binding.root
@@ -37,7 +36,6 @@ class TermsListFilterFragment: DialogFragment(R.layout.fragment_filter_terms_lis
         super.onResume()
 
         setMajorsAdapter()
-        setSemestersAdapter()
         setSubjectsAdapter()
 
     }
@@ -47,11 +45,7 @@ class TermsListFilterFragment: DialogFragment(R.layout.fragment_filter_terms_lis
         val majorsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, majors)
         binding.autoCompleteTextViewMajor.setAdapter(majorsAdapter)
     }
-    private fun setSemestersAdapter() {
-        val semesters = resources.getStringArray(R.array.semesters)
-        val semestersAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, semesters)
-        binding.autoCompleteTextViewSemester.setAdapter(semestersAdapter)
-    }
+
     private fun setSubjectsAdapter() {
         val subjects = resources.getStringArray(R.array.subjects)
         val subjectsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, subjects)

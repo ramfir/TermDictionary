@@ -18,16 +18,6 @@
         <item>Информатика и вычислительная техника</item>
         <item>Прикладная математика</item>
     </string-array>
-    <string-array name="semesters">
-        <item>1 семестр</item>
-        <item>2 семестр</item>
-        <item>3 семестр</item>
-        <item>4 семестр</item>
-        <item>5 семестр</item>
-        <item>6 семестр</item>
-        <item>7 семестр</item>
-        <item>8 семестр</item>
-    </string-array>
     <string-array name="subjects">
         <item>Математический анализ</item>
         <item>Алгебра и геометрия</item>
