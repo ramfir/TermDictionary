@@ -22,7 +22,7 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
         val binding = FragmentTermDetailsBinding.bind(view)
 
-        setupViews(binding)
+        //setupViews(binding)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -41,7 +41,7 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupViews(binding: FragmentTermDetailsBinding) {
+    /*private fun setupViews(binding: FragmentTermDetailsBinding) {
         with(binding) {
             subject.title.text = "Раздел"
             subject.data.text = "(Математика)"
@@ -57,5 +57,5 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
             }
 
         }
-    }
+    }*/
 }
