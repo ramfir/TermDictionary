@@ -22,17 +22,17 @@ class AddTermFragment: Fragment(R.layout.fragment_add_term) {
 
     private fun setupViews() {
         with(binding) {
-            termName.title.text = "Введите термин"
-            termTranslation.title.text = "Введите английский перевод"
-            termDefinition.title.text = "Введите определение"
-            termNotes.title.text = "Введите ваши пометки"
+            termName.textInputLayoutTitle.hint = "Введите термин"
+            termTranslation.textInputLayoutTitle.hint = "Введите английский перевод"
+            termDefinition.textInputLayoutTitle.hint = "Введите определение"
+            termNotes.textInputLayoutTitle.hint = "Введите ваши пометки"
 
             buttonAddTerm.setOnClickListener {
-                val result = "${termName.data.text}\n" +
-                        "${termTranslation.data.text}\n" +
+                val result = "${termName.textInputEditTextData.text}\n" +
+                        "${termTranslation.textInputEditTextData.text}\n" +
                         "${autoCompleteTextViewSubject.text}\n" +
-                        "${termDefinition.data.text}\n" +
-                        "${termNotes.data.text}"
+                        "${termDefinition.textInputEditTextData.text}\n" +
+                        "${termNotes.textInputEditTextData.text}"
                 Toast.makeText(requireContext(), result, Toast.LENGTH_SHORT).show()
             }
         }

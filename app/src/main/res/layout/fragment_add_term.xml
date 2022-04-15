@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".presentation.ui.add_term.AddTermFragment">
 
     <LinearLayout
@@ -24,8 +25,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:hint="Дисциплина">
+            android:layout_marginBottom="16dp"
+            android:hint="Дисциплина"
+            android:textColorHint="@color/red_500">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_subject"
