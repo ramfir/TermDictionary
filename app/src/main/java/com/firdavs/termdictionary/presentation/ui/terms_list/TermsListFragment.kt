@@ -15,26 +15,23 @@ import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapter.OnItemClickListener {
+class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
     private var _binding: FragmentTermsListBinding? = null
     private val binding get() = _binding!!
 
-    private val terms = listOf(
-        TermUI("Абсцисса", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Аксиома", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Аксонометрия", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Алгебра", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Алгоритм", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Апофема", "ddd", "dddd", "ffff", "fdfd", false),
-        TermUI("Аппликата", "ddd", "dddd", "ffff", "fdfd", false)
-    )
-
     private lateinit var toggle: ActionBarDrawerToggle
 
     private val viewModel: TermsListViewModel by viewModel()
+
+    private val termsAdapter by lazy {
+        AsyncListDifferDelegationAdapter(getTermsDiffCallback(), getTermsAdapterDelegate {
+            println("mmm ${it.name} ${it.definition.substring(0, 5)} ${it.translation}")
+        })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -43,19 +40,13 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
 
         // FIXME() toggle button disappears after closing filter dialog
         setHasOptionsMenu(true)
-        initNavigationDrawer(binding)
+        initNavigationDrawer()
 
-        binding.termsListRecyclerView.adapter = TermsListAdapter(terms, this)
-
-        viewModel.terms.observe(viewLifecycleOwner) {
-            it.forEach {
-                println("mmm ${it}")
-            }
-            println("mmm ${it.size}")
-        }
+        binding.termsListRecyclerView.adapter = termsAdapter
+        viewModel.terms.observe(viewLifecycleOwner) { termsAdapter.items = it.toList() }
     }
 
-    private fun initNavigationDrawer(binding: FragmentTermsListBinding) {
+    private fun initNavigationDrawer() {
         toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -109,14 +100,5 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list), TermsListAdapt
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onItemClick(term: TermUI, changeChosenState: Boolean) {
-        if (changeChosenState) {
-            Toast.makeText(requireContext(), "Добавлено в избранное", Toast.LENGTH_SHORT).show()
-        } else {
-            val action = TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(term, term.name)
-            findNavController().navigate(action)
-        }
     }
 }

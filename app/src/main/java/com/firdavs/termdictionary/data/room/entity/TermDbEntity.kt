@@ -21,5 +21,5 @@ data class TermDbEntity(
     }
 }
 
-fun TermDbEntity.toDomain() = Term(name, definition, translation, notes, isChosen)
+fun TermDbEntity.toDomain() = Term(id, name, definition, translation, notes, isChosen)
 fun List<TermDbEntity>.toDomain() = map { it.toDomain() }
