@@ -1,0 +1,184 @@
+Административная оболочка
+Administration shell
+Административная полка
+Administration shell
+Архивный мир
+Archive world
+Архивный мир
+Archive world
+Архитектура
+Architecture
+Атрибут
+Attribute
+Безопасность
+Security
+Валидация
+Validation
+Верификация
+Verification
+Вертикальная интеграция
+Vertical integration
+Вертикальное взаимодействие
+Vertical interaction
+Взаимодействие
+Interaction
+Взаимодействие между услугами
+Choreography between services
+Взаимодействие между человеком и машиной
+Human machine interaction
+Взаимодействие между человеком и машиной
+Human machine interaction
+Виртуальное представление
+Virtual representation
+Возможности компонента Индустрии 4.0
+Skill of an I4.0 component
+Гибкость
+Flexibility
+Горизонтальная интеграция
+Horizontal integration
+Горизонтальное взаимодействие
+Horizontal interaction
+Детерминированное взаимодействие
+Deterministic interaction
+Дислокация представления
+Deployment view
+Дислокация представления
+Deployment view
+Диспетчер компонентов
+Component manager
+Диспетчер компонентов
+Component manager
+Домен
+Domain
+Домен
+Domain
+Жизненный цикл
+Life cycle
+Идентификатор
+Identifier
+Идентичность
+Identity
+Индивидуальный концепт
+Individual concept
+Инструментарий услуг
+Orchestration of services
+Интероперабельность
+Interoperability
+Интерфейс
+Interface
+Информационный мир (цифровой мир — кибермир)
+Information world (digital world — cyber world)
+Киберфизическая производственная система (CPPS)
+Cyber-Physical Production System — CPPS
+Киберфизическая система
+(CPS)Cyber-Physical System (CPS)
+Киберфизическая система
+Cyber-phisical system
+Классификация связи и отображения
+Classification of communication&presentation
+Команда (инструкция)
+Command (instruction)
+Коммуникативное поведение
+Communication behavior
+Коммуникационная способность
+Communication ability
+Коммуникационный канал
+Communication channel
+Коммуникационный режим
+Communication behavior
+Комплексный инжиниринг
+Integrated engineering
+Компонент Индустрии 4.0
+I4.0 component
+Компонент Индустрии 4.0
+I4.0-Component
+Контекст
+Context
+Манифест (список)
+Manifest
+Мир состояний
+State world
+Модель
+Model
+Модель мира
+Model world
+Модель ядра
+Core model
+Недетерминированное взаимодействие
+Non-deterministic interaction
+Нефункциональные требования
+Non-functional requirement
+Ориентация услуги
+Service orientation
+Платформа Индустрии 4.0
+I4.0  platform
+Платформы киберфизической системы
+CPS platform
+Подключай и работай
+Plug & Work
+Потребитель услуги
+Service consumer
+Провайдер услуги
+Service provider
+Процесс
+Process
+Процесс добавленной стоимости
+Value added process
+Процессная модель
+Process model
+Ресурс
+Asset
+Своевременность
+Timeliness
+Свойство
+Property
+Система
+System
+Система добавленной стоимости
+Value added system
+Система Индустрии 4.0
+I4.0 system
+Слой
+Layer
+Событие
+Event
+Совместимый с Индустрией 4.0
+I4.0 compliant
+Состояние
+State
+Ссылочная архитектура
+Reference architecture
+Ссылочная модель
+Reference model
+Сущность
+Entity
+Термин
+Term
+Тип
+Type
+Требование
+Requirement
+Умная продукция
+Smart Product
+Умная фабрика
+Smart Factory
+Умное производство
+Smart Production
+Услуга
+Service
+Физический мир
+Physical world
+Цепочка добавленной стоимости
+Value added chain
+Цифровой двойник
+Digital twin
+Цифровой двойник
+Digital tw
+Экземпляр
+Instance
+Экосистема
+Ecosystem
+Экосистема
+Ecosystem
+Элемент
+Item

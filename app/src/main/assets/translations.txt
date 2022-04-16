@@ -1,0 +1,166 @@
+Virtual digital and active representation of an I4.0 component in the I4.0 system---
+1. An administration shell contains the manifest and the component manager.
+2. Administration shell is synonym to Asset administration shell. ---
+Totality of all information in the information world whose validity or up-to-dateness has expired and which can, thus, no longer be changed---
+1. Information losing its validity or up-to-dateness is transferred to the archive world.
+2. No statement is made regarding the time at which information is transferred from the model world or state world to the archive world---
+Combination of elements of a model based on principles and rules for the purpose of its construction, development and utilization---
+Representation of a property in information technologies---
+State which in the technical context covers among other items functional safety, reliability and IT security.
+Note 1: Due to the breadth of this subject area, this term definition will not be treated in greater detail---
+Examination/testing of described/ defined requirements for a predefined application or use. Note: A product fulfills the requirements of the customer, i.e. examination according to the customer requirement specifications was successful---
+Examinatiоn/testing of the requirements described/defined in the specifications.
+Note: A product fulfills the specifications, i.e. examination according to the functional requirement specifications was successful---
+Integration within a system which crosses functional/organizational hierarchy level---
+Interaction within a system across functional/organizational hierarchy levels---
+Related actions of two or more entities. Note: An interaction can be, for example, deterministic, nondeterministic, asynchronous, synchronous, stateful or stateless---
+(Self-organizing) interaction between service users in the context of higher-level specifications---
+Collaboration between users and technology, such as computers, machines or CPS---
+1. Implemented by human- and task-oriented technical systems at the interface between users and technology.
+2. Includes the analysis, design and evaluation of such systems.
+3. Collaboration synonyms to interaction---
+Digital models of the I4.0 component throughout the entire life cycle.
+Note 1: The virtual representation is part of the administration shell.
+Note 2: The virtual representation can be located in the information layer or in the integration layer of the RAMI4.0.
+Note 3: The manifest is part of the virtual representation. ---
+Potential of an Industrie 4.0 component to achieve an effect within a domain.
+Note 1: Skills can be described as the sum of all properties (see IEC 61360).
+Note 2: The comparison between requirements and assurances is realized via properties of the skill.
+Note 3: Skill can be orchestrated and hierarchically structured.
+Note 4: Capability is often used as synonym to skill.
+Note 5: Skills can be made executable via services.
+Note 6: The impact manifests in a measurable effect within the physical world---
+Characteristic of an item, to adopt it with little effort to changes which were unknown during planning---
+Integration within a functional/ organizational hierarchical level across system boundaries---
+Interaction within a functional/ organizational hierarchy level across system boundaries---
+Interaction, in which the state transition which can be observed is unambiguously determined due to the information received. ---
+Structural mapping of applications to resources---
+Practical example is the distribution of the contents of an administration shell across different IT systems---
+The organizer of self-management and of access to the resources of the I4.0 component. ---
+For example, I4.0 component, item, technical functionality, virtual representation.
+Note: In many documents, component manager is referred to as resource manager, but the term component manager should be used in future---
+Context of application---
+Context of application---
+Continuous number of processes which an item passes from creation to dissolution. ---
+Identity information that unambiguously distinguishes one entity from another one in a given domain.
+Note: there are specific identifiers, e.g. UUID Universal unique identifier, IEC 15418 (GS1) ---
+Set of properties related to an entity. Note: In a particular domain of applicability, an identity can become a distinguishing identity or an identifier to allow entities to be distinguished or uniquely recognized within that domain---
+Term, which represents or designates an individual item or instance---
+Flexible connection of individual services for a defined purpose.
+Note: This can be done during the planning phase and/or at runtime---
+Ability of different components, systems, technologies, or organizations to actively work together for a specific purpose.
+Note: Interoperation is collaboration put into practice---
+Defined connection point of a functional unit which can be connected to other functional units.
+Note 1: “Defined” means that the requirements and the assured properties of this connection point are described.
+Note 2: The connection between the interfaces of function units is also called an interface.
+Note 3: In an information system, the defined exchange of information takes place at this point.
+Note 4: Interface places certain requirements on the connection that is to be made.
+Note 5: Interface demands certain features---
+Ideas, thought constructs, algorithms, models, and the totality of representations of physical objects and people in a virtual environment.
+Note 1: The frame of reference of the totality in question must be defined.
+Note 2: The elements of the information world can be related to each other via semantics. ---
+Cyber-Physical System which is used in production---
+System which links real (physical) objects and processes with information-processing (virtual) objects and processes via open, in some cases global, and constantly interconnected information networks. ---
+A CPS optionally uses services available locally or remotely, has human-machine interfaces, and offers the possibility of dynamic adaptation of the system at runtime---
+Classification of communication and identification capability---
+Request to carry out an action---
+Examples are synchronous/ asynchronous, acknowledged/ not acknowledged/with reply, g determ inistic/non-deterministic, stateful/stateless, unicast/multicast/ broadcast---
+The manner in which data are exchanged with a participant or the participant can exchange these data and whether the participant exchanges data. ---
+Connection between a transmitter/ sender and recipient/receiver which allows the exchange of information---
+Specific manifestation of communications---
+Engineering tasks over the entire life cycle of a technical system for which the information flow via interfaces is guaranteed preserving:
+• consistency of information
+• interpretability of information
+• traceability of information
+Note 1: Tools with digital models simplify the integrated engineering
+Note 2: The digital models can be part of an I4.0 component---
+Globally uniquely identifiable participant with communication capability consisting of administration shell and asset (corresponds to CP24, CP34 or CP44) within an I4.0 system which there offers services with defined QoS---
+1. For its services and data, the 14.0 component offers protection commensurate with the task
+2. An I4.0 component can represent a production system, a single machine or station, or even an assembly within a machine---
+Additional information from a relationship or an environment that can be taken into consideration---
+Externally accessible defined set of meta-information, which provides information about the functional and non-functional properties of the 14.0 component.
+Note: The manifest can be regarded as similar to the manifest in computer science. ---
+Totality of information currently collected in the information world---
+Coherent, sufficiently detailed abstraction of aspects within a field of application. ---
+The entirety of all meta documents, plans and descriptions in the information world---
+Reference model of basic concepts and contexts which concern a general aspect of systems---
+Interaction, in which the state transition that can be observed is not unambiguously determined due to the information receive. Note: This is the case if a system behaves spontaneously in an Interaction, in which the state transition that can be observed is not unambiguously determined due to the information received---
+Requirement that does not belong to the actual system function.
+Note: Examples are availability, performance, usability, compatibility, maintainability, security---
+Paradigm which enables the straightforward exchange, addition or removal of loosely coupled services---
+Implementation of a (standardized) communication and system infrastructure with the necessary management and production services and defined QoS (quality of service) characteristics as a basis for the efficient construction and integration of I4.0 systems in an application domain.
+Note 1: To ensure interoperability, an I4.0 platform must be based on a reference architecture.
+Note 2: An 14.0 platform must define a relation to the 14.0 system. ---
+Implementation of a communication and system infrastructure with necessary management and production services and defined QoS (quality of service) characteristics for the efficient construction and integration of CPS for an application domain---
+Setting up, modification or termination of interoperation between two or more involved parties with minimal effort.
+Note 1: The interoperability of those involved is assumed.
+Note 2: The minimum effort can vary depending on the state of the art.
+Note 3: Plug&play and plug&produce are synonyms or similar terms. ---
+Entity or organization that consumes the service of a provider.
+Note 1: An entity or an organization can be a consumer and a provider (both at the same time) ---
+Entity or organization that provides a service.
+Note 1: An entity or an organization can be a consumer and a provider (both at the same time) ---
+Entirety of procedures in a system by means of which the material, energy or information is transformed, transported or stored---
+Process from which goods valuable to customers arise.
+Note 1: The goods in question may be not only physical in nature (such as raw materials, products) but even intangible (such as knowledge, data, services).
+Note 2: Value assessment and pricing are not considered here.
+Note 3: Value-creation processes are value activities according to Porter---
+Model of a process as a system of coupled part-processes---
+Entity which is owned by or under the custodial duties of an organization, having either a perceived or actual value to the organization---
+Temporal correctness that has yet to be specified in detail.
+Note 1: Response must be given to  events at precisely defined times or events must be triggered at defined times, e. g. not before, not after, or within a specified time interval---
+Defined characteristic suitable for the description and differentiation of entities.
+Note 1: The concept of type and instance applies to properties.
+Note 2: The property types are defined in dictionaries (like IEC Common Data Dictionary or ecl@ss). The property type is also called data element type or property description in some standards.
+Note 3: The property instances have a value and they are provided by the manufacturers. A property instance is also called property-value pair in certain standards.
+Note 4: Properties include nominal value, actual value, measurement values, etc. ---
+A multitude of components that are all related to each other---
+Network or system consisting of value-creation chains or value chains which can include not only cross-connections but also dependencies between them---
+System, consisting of I4.0 components and components of a lower CP classification, which serves a specific purpose, has defined properties, and supports standardized services and states.
+Note 1: A system may be present as a component in a further I4.0 system.
+Note 2: An I4.0 system must define a relation to the 14.0 platform.
+Note 3: Flexibility, transformability, etc. are features of an I4.0 system. ---
+Suggested structure for describing architectural aspects of I4.0 components and I4.0 systems.
+Note 1: vertical axis of RAMI4.0.
+Note 2: comparable/similar to IIRA viewpoints. ---
+Sudden change that can be observed---
+Compliant to criteria which are still to be defined (currently no definition of the content exists) ---
+Manifestation of the characteristics of an object at a certain point in time.
+Note 1: An object can only have one state at any point in time.
+Note 2: Statements about a state can be made without any specific reference to a time---
+Model for a description of the architecture (for I4.0) which is used generally and is recognized as appropriate (with the character of a reference).
+Note: A reference architecture can be defined on the basis of a reference model---
+Model which is used generally and is recognized as appropriate (with the character of a recommendation) in order to derive specific models---
+Uniquely identifiable item which is managed on account of its importance in the information world---
+Conceptual unit formed by abstraction from a set of items by determining the common properties of these items [DIN 2342-1].
+Note: A term can be part of a terminology---
+Descriptive entity that is characterized by a quantity of common properties and their type---
+Specification of required criteria. Note 1: The system can fulfill the required criteria step-by-step, if necessary---
+Produced or manufactured (intermediate) product which in a smart factory delivers the (outward) communication capability to network and to interact intelligently with other production participants.
+Note 1: The product is a produced or manufactured article or semi-finished product.
+Note 2: A digital image is part of the product intelligence and can be localized on the product itself but also spatially separate from it.
+Note 3: Unique identification and product-related information makes it possible for the product to be linked to the smart factory---
+Factory whose degree of integration has reached a level which makes self-organizing functions possible in production and in all business processes relating to production.
+Note: The virtual representation of the factory makes intelligent decisions possible. The aim is to increase efficiency, effectiveness, flexibility and/or adaptability---
+Dialogue between smart factory and smart product---
+Demarcated scope of functionality which is offered by an entity or organization via interfaces.
+Note: One or multiple operations can be assigned to one service---
+The totality of all actually existing items and individuals.
+Note 1: The real world corresponds to the physical world.
+Note 2: Software loaded or in memory is part of the physical world.
+Note 3: The frame of reference of the totality in question must be defined---
+Sequence of value-creation processes (linear or hierarchical, formally this means directed acyclically).
+Note: Corporate boundaries are not necessarily relevant to a value- creation chain or value chain---
+Definition 1: Virtual digital representation of physical assets. For more information, see Notes 10 and 11.
+Definition 2: Simulation model---
+1. In future, the digital twin will be a synonym for the asset administration shell if the development will continue as before.
+2. In the context of Industrie 4.0, the term asset administration shell is preferred---
+Specific entity which has the properties and manifestations of a type. ---
+Loose community of various autonomous players connected in a network with a common goal of creating products and/or services based on a (standardized) communication and system infrastructure---
+1. Players can be participants of the value-added system as well as educational or research institutions, political units, standardization organizations or associations.
+2. Within an ecosystem, players can be engaged at the same time both in cooperation and in competition.
+3. An ecosystem is characterized by a common further development (co-evolution) of the players and the ecosystem---
+Unit which exists objectively, is demarcated and identifiable.
+Note 1: An item can be virtual or physical in nature.
+Note 2: An item can be a device, subsystem, software program, plan, living organism, organization or the like.
+Note 3: An item has a life cycle.

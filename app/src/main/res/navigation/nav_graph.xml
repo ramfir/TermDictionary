@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/termsListFragment"
-        android:name="com.example.termdictionary.presentation.ui.terms_list.TermsListFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.terms_list.TermsListFragment"
         android:label="@string/terms"
         tools:layout="@layout/fragment_terms_list">
         <action
@@ -28,24 +28,24 @@
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
-        android:name="com.example.termdictionary.presentation.ui.term_details.TermDetailsFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.term_details.TermDetailsFragment"
         android:label="{term_name}"
         tools:layout="@layout/fragment_term_details">
         <argument
             android:name="term"
-            app:argType="com.example.termdictionary.presentation.model.TermUI" />
+            app:argType="com.firdavs.termdictionary.presentation.model.TermUI" />
         <argument
             android:name="term_name"
             app:argType="string" />
     </fragment>
     <dialog
         android:id="@+id/termsListFilterFragment"
-        android:name="com.example.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment"
         android:label="fragment_filter_terms_list"
         tools:layout="@layout/fragment_filter_terms_list" />
     <fragment
         android:id="@+id/chosenTermsFragment"
-        android:name="com.example.termdictionary.presentation.ui.chosen_terms.ChosenTermsFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.chosen_terms.ChosenTermsFragment"
         android:label="@string/chosen"
         tools:layout="@layout/fragment_chosen_terms" >
         <action
@@ -54,12 +54,12 @@
     </fragment>
     <fragment
         android:id="@+id/addTermFragment"
-        android:name="com.example.termdictionary.presentation.ui.add_term.AddTermFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.add_term.AddTermFragment"
         android:label="@string/add_term"
         tools:layout="@layout/fragment_add_term" />
     <fragment
         android:id="@+id/testFragment"
-        android:name="com.example.termdictionary.presentation.ui.test.TestFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.test.TestFragment"
         android:label="@string/test"
         tools:layout="@layout/fragment_test" />
 </navigation>
