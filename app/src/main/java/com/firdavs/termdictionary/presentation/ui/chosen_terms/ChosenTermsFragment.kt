@@ -15,13 +15,13 @@ class ChosenTermsFragment: Fragment(R.layout.fragment_chosen_terms) {
     private val binding get() = _binding!!
 
     private val terms = listOf(
-        Term(0, "Абсцисса", "ddd", "dddd", "ffff", false),
-        Term(0, "Аксиома", "ddd", "dddd", "ffff",  false),
-        Term(0, "Аксонометрия", "ddd", "dddd", "ffff", false),
-        Term(0, "Алгебра", "ddd", "dddd", "ffff",  false),
-        Term(0, "Алгоритм", "ddd", "dddd", "ffff", false),
-        Term(0, "Апофема", "ddd", "dddd", "ffff", false),
-        Term(0, "Аппликата", "ddd", "dddd", "ffff", false)
+        TermUI(0, "Абсцисса", "ddd", "dddd", "ffff", false),
+        TermUI(0, "Аксиома", "ddd", "dddd", "ffff",  false),
+        TermUI(0, "Аксонометрия", "ddd", "dddd", "ffff", false),
+        TermUI(0, "Алгебра", "ddd", "dddd", "ffff",  false),
+        TermUI(0, "Алгоритм", "ddd", "dddd", "ffff", false),
+        TermUI(0, "Апофема", "ddd", "dddd", "ffff", false),
+        TermUI(0, "Аппликата", "ddd", "dddd", "ffff", false)
     )
     private val chosenTermsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getChosenTermsDiffCallback(), getChosenTermsAdapterDelegate {

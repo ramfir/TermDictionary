@@ -2,6 +2,7 @@ package com.firdavs.termdictionary.data.repository
 
 import com.firdavs.termdictionary.data.room.TermsDao
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
+import com.firdavs.termdictionary.data.room.entity.toData
 import com.firdavs.termdictionary.data.room.entity.toDomain
 import com.firdavs.termdictionary.domain.model.Term
 import com.firdavs.termdictionary.domain.repository.TermsRepository
@@ -19,10 +20,10 @@ class TermsRepositoryImpl(
     }
 
     override suspend fun addTerm(term: Term) {
-        termsDao.insertTerm(TermDbEntity.fromTerm(term))
+        termsDao.insertTerm(term.toData())
     }
 
-    override suspend fun updateNotes(term: Term) {
-        termsDao.updateNotes(TermDbEntity.fromTerm(term))
+    override suspend fun updateTerm(term: Term) {
+        termsDao.updateTerm(term.toData())
     }
 }

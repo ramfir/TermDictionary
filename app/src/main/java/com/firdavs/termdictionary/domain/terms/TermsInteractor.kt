@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 class TermsInteractor(private val termsRepository: TermsRepository) {
 
     fun getTerms(): Flow<List<Term>> = termsRepository.getTerms()
+
+    suspend fun updateTerm(term: Term) = termsRepository.updateTerm(term)
 }

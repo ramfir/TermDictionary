@@ -13,20 +13,33 @@ import com.firdavs.termdictionary.presentation.model.TermUI
 
 class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
+    private var _binding: FragmentTermDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    private var term: TermUI? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
 
-        val term = arguments?.get("term") ?: TermUI("nothing", "ddd", "dddd", "ffff", "fdfd", false)
+        term = arguments?.get("term") as TermUI
 
-        val binding = FragmentTermDetailsBinding.bind(view)
+        _binding = FragmentTermDetailsBinding.bind(view)
 
-        //setupViews(binding)
+        initViews()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_term_details, menu)
+        setIcon(menu.findItem(R.id.star))
+
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun setIcon(item: MenuItem) {
+        if (term?.isChosen == true) {
+            item.setIcon(R.drawable.ic_star_checked)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -40,21 +53,12 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
         return super.onOptionsItemSelected(item)
     }
 
-    /*private fun setupViews(binding: FragmentTermDetailsBinding) {
+    private fun initViews() {
         with(binding) {
-            subject.title.text = "Раздел"
-            subject.data.text = "(Математика)"
-            definition.title.text = "Определение"
-            definition.data.text = "(Определение)"
-            translation.title.text = "Перевод на английский"
-            translation.data.text = "(Перевод)"
-
-            imageViewPen.setOnClickListener {
-                materialCardView.strokeColor =
-                    ContextCompat.getColor(requireContext(), R.color.grey)
-                editTextNotes.isFocusableInTouchMode = true
-            }
-
+            subject.setText("Введение в специальность")
+            definition.setText(term?.definition)
+            translation.setText(term?.translation)
+            notes.setText(term?.notes)
         }
-    }*/
+    }
 }

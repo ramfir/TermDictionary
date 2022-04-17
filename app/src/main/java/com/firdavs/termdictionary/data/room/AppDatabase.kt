@@ -8,20 +8,17 @@ import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
-import java.io.File
 
-@Database(
-        version = 1,
-        entities = [TermDbEntity::class]
-)
+@Database(version = 1, entities = [TermDbEntity::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getTermsDao(): TermsDao
 
     class Callback(
             private val context: Context,
-            private val applicationScope: CoroutineScope
+            private val applicationScope: CoroutineScope,
     ) : RoomDatabase.Callback() {
+
         val appDatabase: AppDatabase by inject(AppDatabase::class.java)
 
         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -34,29 +31,12 @@ abstract class AppDatabase : RoomDatabase() {
                     .bufferedReader()
                     .readLines()
                     .map { it.trim() }
-                val terms = mutableListOf<String>()
-                var i = 0
-                while (i < termsANDtranslations.size) {
-                    terms.add(termsANDtranslations[i])
-                    i += 2
-                }
-                val translations = mutableListOf<String>()
-                i = 1
-                while (i < termsANDtranslations.size) {
-                    translations.add(termsANDtranslations[i])
-                    i += 2
-                }
+                val terms = termsANDtranslations.filterIndexed { index, _ -> index % 2 == 0 }
+                val translations = termsANDtranslations.filterIndexed { index, _ -> index % 2 == 1 }
                 val definitions = context.assets.open("definitions.txt")
                     .bufferedReader().readText().split("---").map { it.trim() }
                 for (i in 0 until 92) {
-                    val term = TermDbEntity(
-                            0,
-                            terms[i],
-                            definitions[i],
-                            translations[i],
-                            "",
-                            false
-                    )
+                    val term = TermDbEntity(0, terms[i], definitions[i], translations[i], "", false)
                     dao.insertTerm(term)
                 }
             }

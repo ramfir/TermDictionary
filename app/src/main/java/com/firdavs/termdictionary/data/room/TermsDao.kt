@@ -14,7 +14,7 @@ interface TermsDao {
     fun getTerms(): Flow<List<TermDbEntity>>
 
     @Update
-    suspend fun updateNotes(term: TermDbEntity)
+    suspend fun updateTerm(term: TermDbEntity)
 
     @Insert
     suspend fun insertTerm(term: TermDbEntity)

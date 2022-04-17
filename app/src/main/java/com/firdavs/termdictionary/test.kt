@@ -3,7 +3,14 @@ package com.firdavs.termdictionary
 import java.io.File
 
 fun main() {
-    printTerms()
+
+    val number = listOf(1, 2, 3, 4, 5, 6, 7, 8)
+    val odds = number.filterIndexed { index, _ -> index % 2 == 0}
+    val others = number.filterIndexed { index, _ -> index % 2 == 1}
+    println(number)
+    println(odds)
+    println(others)
+    //printTerms()
     //printDefinitions()
     //printTranslations()
 }

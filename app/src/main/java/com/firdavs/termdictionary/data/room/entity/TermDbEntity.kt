@@ -8,18 +8,16 @@ import com.firdavs.termdictionary.presentation.model.TermUI
 
 @Entity(tableName = "terms")
 data class TermDbEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(collate = ColumnInfo.NOCASE) val name: String,
-    @ColumnInfo(collate = ColumnInfo.NOCASE) val definition: String,
-    @ColumnInfo(collate = ColumnInfo.NOCASE) val translation: String,
-    @ColumnInfo(collate = ColumnInfo.NOCASE) val notes: String,
-    val isChosen: Boolean
-) {
-    companion object {
-        fun fromTerm(term: Term) =
-            TermDbEntity(0, term.name, term.definition, term.translation, term.notes, term.isChosen)
-    }
-}
+        @PrimaryKey(autoGenerate = true) val id: Long,
+        @ColumnInfo(collate = ColumnInfo.NOCASE) val name: String,
+        @ColumnInfo(collate = ColumnInfo.NOCASE) val definition: String,
+        @ColumnInfo(collate = ColumnInfo.NOCASE) val translation: String,
+        @ColumnInfo(collate = ColumnInfo.NOCASE) val notes: String,
+        val isChosen: Boolean
+        )
+
+fun Term.toData() = TermDbEntity(id, name, definition, translation, notes, isChosen)
+fun List<Term>.toData() = map { it.toData() }
 
 fun TermDbEntity.toDomain() = Term(id, name, definition, translation, notes, isChosen)
 fun List<TermDbEntity>.toDomain() = map { it.toDomain() }

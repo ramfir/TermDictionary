@@ -7,5 +7,5 @@ interface TermsRepository {
 
     fun getTerms(): Flow<List<Term>>
     suspend fun addTerm(term: Term)
-    suspend fun updateNotes(term: Term)
+    suspend fun updateTerm(term: Term)
 }

@@ -10,12 +10,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
@@ -28,9 +30,10 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     private val viewModel: TermsListViewModel by viewModel()
 
     private val termsAdapter by lazy {
-        AsyncListDifferDelegationAdapter(getTermsDiffCallback(), getTermsAdapterDelegate {
-            println("mmm ${it.name} ${it.definition.substring(0, 5)} ${it.translation}")
-        })
+        AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
+                                         getTermsAdapterDelegate { term, changeChosenProperty ->
+                                             viewModel.onTermClicked(term, changeChosenProperty)
+                                         })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,11 +46,28 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         initNavigationDrawer()
 
         binding.termsListRecyclerView.adapter = termsAdapter
-        viewModel.terms.observe(viewLifecycleOwner) { termsAdapter.items = it.toList() }
+        viewModel.terms.observe(viewLifecycleOwner) {
+            termsAdapter.items = it.toList()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.termEvent.collect { event ->
+                when (event) {
+                    is TermsListViewModel.TermEvent.NavigateToTermDetailsFragment -> {
+                        val action =
+                            TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(
+                                    event.term,
+                                    event.term.name)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
     }
 
     private fun initNavigationDrawer() {
-        toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, R.string.open, R.string.close)
+        toggle =
+            ActionBarDrawerToggle(activity, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true) // for converting hamburger to back arrow
@@ -55,7 +75,8 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.chosen_terms -> {
-                    val action = TermsListFragmentDirections.actionTermsListFragmentToChosenTermsFragment()
+                    val action =
+                        TermsListFragmentDirections.actionTermsListFragmentToChosenTermsFragment()
                     findNavController().navigate(action)
                 }
                 R.id.test -> {
@@ -63,13 +84,22 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                     findNavController().navigate(action)
                 }
                 R.id.add_term -> {
-                    val action = TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment()
+                    val action =
+                        TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment()
                     findNavController().navigate(action)
                 }
-                R.id.extract_term -> Toast.makeText(requireContext(), R.string.extract_terms, Toast.LENGTH_SHORT).show()
-                R.id.settings -> Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
-                R.id.import_terms -> Toast.makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT).show()
-                R.id.contact -> Toast.makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT).show()
+                R.id.extract_term -> Toast
+                    .makeText(requireContext(), R.string.extract_terms, Toast.LENGTH_SHORT)
+                    .show()
+                R.id.settings -> Toast
+                    .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
+                    .show()
+                R.id.import_terms -> Toast
+                    .makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT)
+                    .show()
+                R.id.contact -> Toast
+                    .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
+                    .show()
             }
             true
         }
@@ -80,7 +110,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?) = true
             override fun onQueryTextChange(newText: String?): Boolean {
                 Toast.makeText(requireContext(), newText, Toast.LENGTH_SHORT).show()
@@ -90,11 +120,14 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) { return true }
-        when(item.itemId) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        when (item.itemId) {
             R.id.action_filter -> {
                 Toast.makeText(requireContext(), "Фильтр", Toast.LENGTH_SHORT).show()
-                val action = TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
+                val action =
+                    TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
                 findNavController().navigate(action)
                 return true
             }

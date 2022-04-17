@@ -18,6 +18,7 @@
         app:boxStrokeColor="@color/red_500">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -35,6 +36,7 @@
         app:boxStrokeColor="@color/red_500">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/definition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -52,6 +54,7 @@
         app:boxStrokeColor="@color/red_500">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/translation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -68,6 +71,7 @@
         android:textColorHint="@color/red_500">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Семинар 3"
