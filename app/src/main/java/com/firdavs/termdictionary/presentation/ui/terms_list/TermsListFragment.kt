@@ -118,7 +118,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             override fun onQueryTextSubmit(query: String?) = true
             override fun onQueryTextChange(newText: String?): Boolean {
                 viewModel.searchQuery.value = newText.orEmpty()
-                Toast.makeText(requireContext(), newText, Toast.LENGTH_SHORT).show()
                 return true
             }
         })

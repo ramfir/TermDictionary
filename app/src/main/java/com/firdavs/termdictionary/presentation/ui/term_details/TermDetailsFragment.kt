@@ -5,7 +5,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermDetailsBinding
@@ -54,8 +56,8 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.star -> {
-                viewModel.changeChosenProperty(term!!)
                 term = term!!.copy(isChosen = !term!!.isChosen)
+                viewModel.updateTerm(term!!)
 
                 mMenu?.let { setIcon(it.findItem(R.id.star)) }
             }
@@ -69,6 +71,18 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
             definition.setText(term?.definition)
             translation.setText(term?.translation)
             notes.setText(term?.notes)
+            saveNotes.setEndIconOnClickListener {
+                term = term?.copy(notes = notes.text.toString())
+                viewModel.updateTerm(term!!)
+                Toast.makeText(requireContext(), "Пометки сохранены", Toast.LENGTH_SHORT).show()
+                hideKeyboard()
+                notes.clearFocus()
+            }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 }

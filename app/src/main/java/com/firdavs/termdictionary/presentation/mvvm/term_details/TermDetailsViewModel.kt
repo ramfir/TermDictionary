@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 
 class TermDetailsViewModel(private val termsInteractor: TermsInteractor): ViewModel() {
 
-    fun changeChosenProperty(term: TermUI) {
+    fun updateTerm(term: TermUI) {
         viewModelScope.launch {
-            termsInteractor.updateTerm(term.copy(isChosen = !term.isChosen).toDomain())
+            termsInteractor.updateTerm(term.toDomain())
         }
     }
 }
