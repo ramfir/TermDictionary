@@ -25,7 +25,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     private var _binding: FragmentTermsListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var toggle: ActionBarDrawerToggle
+    private var toggle: ActionBarDrawerToggle? = null
 
     private val viewModel: TermsListViewModel by viewModel()
 
@@ -64,12 +64,16 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             }
         }
     }
-
+    
     private fun initNavigationDrawer() {
         toggle =
-            ActionBarDrawerToggle(activity, binding.drawerLayout, R.string.open, R.string.close)
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+            ActionBarDrawerToggle(activity,
+                                  binding.drawerLayout,
+                                  R.string.open,
+                                  R.string.close).also {
+                binding.drawerLayout.addDrawerListener(it)
+                it.syncState()
+            }
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true) // for converting hamburger to back arrow
 
         binding.navView.setNavigationItemSelectedListener {
@@ -120,17 +124,14 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
+        if (toggle?.onOptionsItemSelected(item) == true) { return true }
+
+        if (item.itemId == R.id.action_filter) {
+            Toast.makeText(requireContext(), "Фильтр", Toast.LENGTH_SHORT).show()
+            val action =
+                TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
+            findNavController().navigate(action)
             return true
-        }
-        when (item.itemId) {
-            R.id.action_filter -> {
-                Toast.makeText(requireContext(), "Фильтр", Toast.LENGTH_SHORT).show()
-                val action =
-                    TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
-                findNavController().navigate(action)
-                return true
-            }
         }
         return super.onOptionsItemSelected(item)
     }

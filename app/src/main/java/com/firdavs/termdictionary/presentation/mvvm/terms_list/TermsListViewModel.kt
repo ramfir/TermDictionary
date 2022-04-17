@@ -20,9 +20,9 @@ class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewMode
     private val taskEventChannel = Channel<TermEvent>()
     val termEvent = taskEventChannel.receiveAsFlow()
 
-    fun onTermClicked(term: TermUI, changeChosenProperty: Boolean) {
+    fun onTermClicked(term: TermUI, isChosenPropertyChanged: Boolean) {
         viewModelScope.launch {
-            if (changeChosenProperty) {
+            if (isChosenPropertyChanged) {
                 termsInteractor.updateTerm(term.copy(isChosen = !term.isChosen).toDomain())
             } else {
                 taskEventChannel.send(TermEvent.NavigateToTermDetailsFragment(term))

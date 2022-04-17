@@ -6,6 +6,7 @@ import com.firdavs.termdictionary.data.repository.TermsRepositoryImpl
 import com.firdavs.termdictionary.data.room.AppDatabase
 import com.firdavs.termdictionary.domain.repository.TermsRepository
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
+import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -19,6 +20,7 @@ val appModule = module {
     single<CoroutineScope> { CoroutineScope(SupervisorJob()) }
     single<TermsInteractor> { TermsInteractor(get()) }
     viewModel { TermsListViewModel(get()) }
+    viewModel { TermDetailsViewModel(get()) }
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {

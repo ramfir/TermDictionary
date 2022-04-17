@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/star"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/ic_star_border"
         android:title="Добавить в избранное"
         app:showAsAction="always"/>
 </menu>

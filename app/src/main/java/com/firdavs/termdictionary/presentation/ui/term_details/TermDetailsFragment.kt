@@ -10,11 +10,17 @@ import androidx.fragment.app.Fragment
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermDetailsBinding
 import com.firdavs.termdictionary.presentation.model.TermUI
+import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
     private var _binding: FragmentTermDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: TermDetailsViewModel by viewModel()
+
+    private var mMenu: Menu? = null
 
     private var term: TermUI? = null
 
@@ -31,6 +37,7 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_term_details, menu)
+        mMenu = menu
         setIcon(menu.findItem(R.id.star))
 
         super.onCreateOptionsMenu(menu, inflater)
@@ -39,16 +46,24 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
     private fun setIcon(item: MenuItem) {
         if (term?.isChosen == true) {
             item.setIcon(R.drawable.ic_star_checked)
+        } else {
+            item.setIcon(R.drawable.ic_star_border)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.star -> Toast.makeText(
-                requireContext(),
-                "Добавлено в избранное",
-                Toast.LENGTH_SHORT
-            ).show()
+            R.id.star -> {
+                Toast.makeText(
+                        requireContext(),
+                        "Добавлено в избранное",
+                        Toast.LENGTH_SHORT
+                ).show()
+                viewModel.changeChosenProperty(term!!)
+                term = term!!.copy(isChosen = !term!!.isChosen)
+
+                mMenu?.let { setIcon(it.findItem(R.id.star)) }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
