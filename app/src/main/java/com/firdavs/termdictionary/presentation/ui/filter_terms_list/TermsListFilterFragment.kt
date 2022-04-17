@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentFilterTermsListBinding
 
@@ -19,9 +20,9 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View {
 
         _binding = FragmentFilterTermsListBinding.inflate(inflater, container, false)
@@ -29,9 +30,14 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
         binding.buttonApplyFilter.setOnClickListener {
             val major = binding.autoCompleteTextViewMajor.text
             val subject = binding.autoCompleteTextViewSubject.text
-            Toast.makeText(requireContext(), "$major\n$subject", Toast.LENGTH_SHORT).show()
+            val isChosenSelected = binding.chosenSwitch.isChecked
+            val action =
+                TermsListFilterFragmentDirections
+                    .actionTermsListFilterFragmentToTermsListFragment2(isChosenSelected = isChosenSelected)
+            findNavController().navigate(action)
             dismiss()
         }
+        dialog?.setCanceledOnTouchOutside(true)
         return binding.root
     }
 

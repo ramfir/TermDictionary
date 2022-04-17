@@ -16,6 +16,7 @@ import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
+import com.firdavs.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,9 +47,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         initNavigationDrawer()
 
         binding.termsListRecyclerView.adapter = termsAdapter
-        viewModel.terms.observe(viewLifecycleOwner) {
-            termsAdapter.items = it.toList()
-        }
+        viewModel.terms.observe(viewLifecycleOwner) { termsAdapter.items = it.toList() }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.termEvent.collect { event ->
@@ -63,6 +62,12 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 }
             }
         }
+
+        val major = arguments?.getString("major")
+        val subject = arguments?.getString("subject")
+        val isChosenSelected = arguments?.getBoolean("isChosenSelected") ?: false
+
+        viewModel.isChosenSelected.value = isChosenSelected
     }
     
     private fun initNavigationDrawer() {
@@ -78,11 +83,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.chosen_terms -> {
-                    val action =
-                        TermsListFragmentDirections.actionTermsListFragmentToChosenTermsFragment()
-                    findNavController().navigate(action)
-                }
                 R.id.test -> {
                     val action = TermsListFragmentDirections.actionTermsListFragmentToTestFragment()
                     findNavController().navigate(action)
@@ -127,7 +127,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         if (toggle?.onOptionsItemSelected(item) == true) { return true }
 
         if (item.itemId == R.id.action_filter) {
-            Toast.makeText(requireContext(), "Фильтр", Toast.LENGTH_SHORT).show()
             val action =
                 TermsListFragmentDirections.actionTermsListFragmentToTermsListFilterFragment()
             findNavController().navigate(action)

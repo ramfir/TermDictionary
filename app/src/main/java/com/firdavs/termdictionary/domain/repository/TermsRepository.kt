@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TermsRepository {
 
-    fun getTerms(searchQuery: String): Flow<List<Term>>
+    fun getTerms(searchQuery: String, isChosenSelected: Boolean): Flow<List<Term>>
     suspend fun addTerm(term: Term)
     suspend fun updateTerm(term: Term)
 }

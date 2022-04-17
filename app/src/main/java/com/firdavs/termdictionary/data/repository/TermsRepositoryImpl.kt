@@ -10,13 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class TermsRepositoryImpl(
-    private val termsDao: TermsDao
-): TermsRepository {
+        private val termsDao: TermsDao,
+) : TermsRepository {
 
-    override fun getTerms(searchQuery: String): Flow<List<Term>> {
-        return termsDao.getTerms(searchQuery).map {
-            it.toDomain()
-        }
+    override fun getTerms(searchQuery: String, isChosenSelected: Boolean): Flow<List<Term>> {
+        return termsDao.getTerms(searchQuery, isChosenSelected).map { it.toDomain() }
     }
 
     override suspend fun addTerm(term: Term) {

@@ -17,14 +17,23 @@
             android:id="@+id/action_termsListFragment_to_termsListFilterFragment"
             app:destination="@id/termsListFilterFragment" />
         <action
-            android:id="@+id/action_termsListFragment_to_chosenTermsFragment"
-            app:destination="@id/chosenTermsFragment" />
-        <action
             android:id="@+id/action_termsListFragment_to_addTermFragment"
             app:destination="@id/addTermFragment" />
         <action
             android:id="@+id/action_termsListFragment_to_testFragment"
             app:destination="@id/testFragment" />
+        <argument
+            android:name="major"
+            app:argType="string"
+            android:defaultValue="Все" />
+        <argument
+            android:name="subject"
+            app:argType="string"
+            android:defaultValue="Все" />
+        <argument
+            android:name="isChosenSelected"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -42,16 +51,11 @@
         android:id="@+id/termsListFilterFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment"
         android:label="fragment_filter_terms_list"
-        tools:layout="@layout/fragment_filter_terms_list" />
-    <fragment
-        android:id="@+id/chosenTermsFragment"
-        android:name="com.firdavs.termdictionary.presentation.ui.chosen_terms.ChosenTermsFragment"
-        android:label="@string/chosen"
-        tools:layout="@layout/fragment_chosen_terms" >
+        tools:layout="@layout/fragment_filter_terms_list" >
         <action
-            android:id="@+id/action_chosenTermsFragment_to_termDetailFragment"
-            app:destination="@id/termDetailFragment" />
-    </fragment>
+            android:id="@+id/action_termsListFilterFragment_to_termsListFragment2"
+            app:destination="@id/termsListFragment" />
+    </dialog>
     <fragment
         android:id="@+id/addTermFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.add_term.AddTermFragment"

@@ -14,8 +14,15 @@ class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewMode
 
     val searchQuery = MutableStateFlow("")
 
-    private val termsFlow = searchQuery.flatMapLatest {
-        termsInteractor.getTerms(it).map { it.toUI() }
+    val isChosenSelected = MutableStateFlow(false)
+
+    private val termsFlow = combine(
+            searchQuery,
+            isChosenSelected
+    ) { query, isChosenSelected ->
+        Pair(query, isChosenSelected)
+    }.flatMapLatest { (query, isChosenSelected) ->
+        termsInteractor.getTerms(query, isChosenSelected).map { it.toUI() }
     }
 
     val terms = termsFlow.asLiveData()

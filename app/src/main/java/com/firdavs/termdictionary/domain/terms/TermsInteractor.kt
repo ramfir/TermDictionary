@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 class TermsInteractor(private val termsRepository: TermsRepository) {
 
-    fun getTerms(searchQuery: String): Flow<List<Term>> = termsRepository.getTerms(searchQuery)
+    fun getTerms(searchQuery: String, isChosenSelected: Boolean): Flow<List<Term>> =
+        termsRepository.getTerms(searchQuery, isChosenSelected)
 
     suspend fun updateTerm(term: Term) = termsRepository.updateTerm(term)
 }
