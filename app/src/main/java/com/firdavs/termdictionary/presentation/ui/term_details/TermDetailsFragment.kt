@@ -54,11 +54,6 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.star -> {
-                Toast.makeText(
-                        requireContext(),
-                        "Добавлено в избранное",
-                        Toast.LENGTH_SHORT
-                ).show()
                 viewModel.changeChosenProperty(term!!)
                 term = term!!.copy(isChosen = !term!!.isChosen)
 

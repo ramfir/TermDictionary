@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TermsDao {
 
-    @Query("SELECT * FROM terms")
-    fun getTerms(): Flow<List<TermDbEntity>>
+    @Query("SELECT * FROM terms WHERE name LIKE '%' || :searchQuery || '%' ")
+    fun getTerms(searchQuery: String): Flow<List<TermDbEntity>>
 
     @Update
     suspend fun updateTerm(term: TermDbEntity)

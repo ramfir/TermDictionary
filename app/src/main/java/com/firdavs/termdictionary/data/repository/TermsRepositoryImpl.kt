@@ -13,8 +13,8 @@ class TermsRepositoryImpl(
     private val termsDao: TermsDao
 ): TermsRepository {
 
-    override fun getTerms(): Flow<List<Term>> {
-        return termsDao.getTerms().map {
+    override fun getTerms(searchQuery: String): Flow<List<Term>> {
+        return termsDao.getTerms(searchQuery).map {
             it.toDomain()
         }
     }

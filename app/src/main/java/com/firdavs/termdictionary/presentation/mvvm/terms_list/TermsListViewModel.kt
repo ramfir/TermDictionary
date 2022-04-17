@@ -7,14 +7,17 @@ import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
 import com.firdavs.termdictionary.presentation.model.toUI
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewModel() {
 
-    val termsFlow = termsInteractor.getTerms().map { it.toUI() }
+    val searchQuery = MutableStateFlow("")
+
+    private val termsFlow = searchQuery.flatMapLatest {
+        termsInteractor.getTerms(it).map { it.toUI() }
+    }
+
     val terms = termsFlow.asLiveData()
 
     private val taskEventChannel = Channel<TermEvent>()
