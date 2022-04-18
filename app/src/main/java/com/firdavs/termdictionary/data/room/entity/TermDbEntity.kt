@@ -13,8 +13,8 @@ data class TermDbEntity(
         @ColumnInfo(collate = ColumnInfo.NOCASE) val definition: String,
         @ColumnInfo(collate = ColumnInfo.NOCASE) val translation: String,
         @ColumnInfo(collate = ColumnInfo.NOCASE) val notes: String,
-        val isChosen: Boolean
-        )
+        val isChosen: Boolean,
+)
 
 fun Term.toData() = TermDbEntity(id, name, definition, translation, notes, isChosen)
 fun List<Term>.toData() = map { it.toData() }

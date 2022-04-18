@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
 import com.firdavs.termdictionary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

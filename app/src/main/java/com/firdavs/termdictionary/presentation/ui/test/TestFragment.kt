@@ -38,8 +38,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                         Toast.makeText(requireContext(), "Верно", Toast.LENGTH_SHORT).show()
                     }
                     is TestFragmentViewModel.TestEvent.ShowWrongAnswerToast -> {
-                        Toast
-                            .makeText(requireContext(),
+                        Toast.makeText(requireContext(),
                                       "Неверно\nПравильный ответ: ${event.answer}",
                                       Toast.LENGTH_LONG)
                             .show()

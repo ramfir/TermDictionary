@@ -1,4 +1,4 @@
-package com.firdavs.termdictionary.data.room
+package com.firdavs.termdictionary.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -21,5 +21,5 @@ interface TermsDao {
     suspend fun insertTerm(term: TermDbEntity)
 
     @Query("SELECT * FROM terms WHERE id IN(:randomTermIDs)")
-    suspend fun getRandomTerms(randomTermIDs: List<Int>): List<Term>
+    suspend fun getRandomTerms(randomTermIDs: List<Int>): List<TermDbEntity>
 }
