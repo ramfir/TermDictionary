@@ -49,8 +49,12 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
 
         viewModel.subjects.observe(viewLifecycleOwner) {
             binding.autoCompleteTextViewSubject.setAdapter(
-                    ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, it.map { it.name }
-                    )
+                    ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, it.map { it.name })
+            )
+        }
+        viewModel.majors.observe(viewLifecycleOwner) {
+            binding.autoCompleteTextViewMajor.setAdapter(
+                    ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, it.map { it.name })
             )
         }
     }
@@ -59,25 +63,5 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
         return super.onCreateDialog(savedInstanceState).apply {
             window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        //setMajorsAdapter()
-        //setSubjectsAdapter()
-    }
-
-    private fun setMajorsAdapter() {
-        val majors = resources.getStringArray(R.array.majors)
-        val majorsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, majors)
-        binding.autoCompleteTextViewMajor.setAdapter(majorsAdapter)
-    }
-
-    private fun setSubjectsAdapter() {
-        val subjects = resources.getStringArray(R.array.subjects)
-        val subjectsAdapter =
-            ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, subjects)
-        binding.autoCompleteTextViewSubject.setAdapter(subjectsAdapter)
     }
 }

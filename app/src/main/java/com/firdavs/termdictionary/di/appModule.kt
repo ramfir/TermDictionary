@@ -2,9 +2,12 @@ package com.firdavs.termdictionary.di
 
 import android.content.Context
 import androidx.room.Room
+import com.firdavs.termdictionary.data.repository.MajorsRepositoryImpl
 import com.firdavs.termdictionary.data.repository.SubjectsRepositoryImpl
 import com.firdavs.termdictionary.data.repository.TermsRepositoryImpl
 import com.firdavs.termdictionary.data.room.AppDatabase
+import com.firdavs.termdictionary.domain.majors.MajorsInteractor
+import com.firdavs.termdictionary.domain.repository.MajorsRepository
 import com.firdavs.termdictionary.domain.repository.SubjectsRepository
 import com.firdavs.termdictionary.domain.repository.TermsRepository
 import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
@@ -23,13 +26,19 @@ val appModule = module {
     single<AppDatabase> { provideAppDatabase(androidContext(), get()) }
     single<TermsRepository> { provideTermsRepositoryImpl(get())}
     single<SubjectsRepository> { provideSubjectsRepositoryImpl(get())}
+    single<MajorsRepository> { provideMajorsRepositoryImpl(get())}
     single<CoroutineScope> { CoroutineScope(SupervisorJob()) }
     single<TermsInteractor> { TermsInteractor(get()) }
     single<SubjectsInteractor> { SubjectsInteractor(get()) }
+    single<MajorsInteractor> { MajorsInteractor(get()) }
     viewModel { TermsListViewModel(get()) }
     viewModel { TermDetailsViewModel(get()) }
     viewModel { TestFragmentViewModel(get()) }
-    viewModel { TermsListFilterViewModel(get()) }
+    viewModel { TermsListFilterViewModel(get(), get()) }
+}
+
+fun provideMajorsRepositoryImpl(database: AppDatabase): MajorsRepositoryImpl {
+    return MajorsRepositoryImpl(database.getMajorsDao())
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {

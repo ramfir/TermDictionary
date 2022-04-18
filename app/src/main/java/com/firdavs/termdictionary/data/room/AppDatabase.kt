@@ -4,19 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.firdavs.termdictionary.data.room.dao.MajorsDao
 import com.firdavs.termdictionary.data.room.dao.SubjectsDao
 import com.firdavs.termdictionary.data.room.dao.TermsDao
+import com.firdavs.termdictionary.data.room.entity.MajorDbEntity
 import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-@Database(version = 1, entities = [TermDbEntity::class, SubjectDBEntity::class])
+@Database(version = 1, entities = [TermDbEntity::class, SubjectDBEntity::class, MajorDbEntity::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getTermsDao(): TermsDao
     abstract fun getSubjectsDao(): SubjectsDao
+    abstract fun getMajorsDao(): MajorsDao
 
     class Callback(
             private val context: Context,
@@ -31,6 +34,16 @@ abstract class AppDatabase : RoomDatabase() {
             applicationScope.launch {
                 addTerms(appDatabase.getTermsDao())
                 addSubjects(appDatabase.getSubjectsDao())
+                addMajors(appDatabase.getMajorsDao())
+            }
+        }
+
+        private suspend fun addMajors(dao: MajorsDao) {
+            val majors =
+                context.assets.open("majors.txt").bufferedReader().readLines().map { it.trim() }
+            majors.forEach {
+                val major = MajorDbEntity(0, it)
+                dao.insertMajor(major)
             }
         }
 

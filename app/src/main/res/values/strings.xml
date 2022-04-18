@@ -12,18 +12,4 @@
     <string name="import_terms">Импорт новых терминов</string>
     <string name="contact">Обратная связь</string>
     <string name="question">Утверждение, которое принимается без доказательства и является исходным для доказательства других утверждений называется:</string>
-
-    <string-array name="majors">
-        <item>Прикладная информатика</item>
-        <item>Информатика и вычислительная техника</item>
-        <item>Прикладная математика</item>
-    </string-array>
-    <string-array name="subjects">
-        <item>Математический анализ</item>
-        <item>Алгебра и геометрия</item>
-        <item>Инженерная графика</item>
-        <item>Информатика</item>
-        <item>Философия</item>
-        <item>Физика</item>
-    </string-array>
 </resources>
