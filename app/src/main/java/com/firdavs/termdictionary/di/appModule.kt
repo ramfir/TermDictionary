@@ -8,6 +8,7 @@ import com.firdavs.termdictionary.domain.repository.TermsRepository
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
+import com.firdavs.termdictionary.presentation.mvvm.test.TestFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
@@ -21,6 +22,7 @@ val appModule = module {
     single<TermsInteractor> { TermsInteractor(get()) }
     viewModel { TermsListViewModel(get()) }
     viewModel { TermDetailsViewModel(get()) }
+    viewModel { TestFragmentViewModel(get()) }
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {

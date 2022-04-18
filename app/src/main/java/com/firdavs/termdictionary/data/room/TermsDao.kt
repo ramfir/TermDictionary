@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
+import com.firdavs.termdictionary.domain.model.Term
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,4 +19,7 @@ interface TermsDao {
 
     @Insert
     suspend fun insertTerm(term: TermDbEntity)
+
+    @Query("SELECT * FROM terms WHERE id IN(:randomTermIDs)")
+    suspend fun getRandomTerms(randomTermIDs: List<Int>): List<Term>
 }

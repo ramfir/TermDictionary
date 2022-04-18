@@ -24,4 +24,8 @@ class TermsRepositoryImpl(
     override suspend fun updateTerm(term: Term) {
         termsDao.updateTerm(term.toData())
     }
+
+    override suspend fun getRandomTerms(randomTermIDs: List<Int>): List<Term> {
+        return termsDao.getRandomTerms(randomTermIDs)
+    }
 }

@@ -10,4 +10,6 @@ class TermsInteractor(private val termsRepository: TermsRepository) {
         termsRepository.getTerms(searchQuery, isChosenSelected)
 
     suspend fun updateTerm(term: Term) = termsRepository.updateTerm(term)
+
+    suspend fun getRandomTerms(randomTermIDs: List<Int>) = termsRepository.getRandomTerms(randomTermIDs)
 }
