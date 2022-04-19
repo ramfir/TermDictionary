@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "45541cac48e4b4efe75e9e67f66852d0",
+    "identityHash": "bda4d2afe3acbe39cf9df39aa3205d55",
     "entities": [
       {
         "tableName": "terms",
@@ -105,12 +105,72 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "terms_subjects",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`termId` INTEGER NOT NULL, `subjectId` INTEGER NOT NULL, PRIMARY KEY(`termId`, `subjectId`), FOREIGN KEY(`termId`) REFERENCES `terms`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`subjectId`) REFERENCES `subjects`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "termId",
+            "columnName": "termId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subjectId",
+            "columnName": "subjectId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "termId",
+            "subjectId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_terms_subjects_subjectId",
+            "unique": false,
+            "columnNames": [
+              "subjectId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_terms_subjects_subjectId` ON `${TABLE_NAME}` (`subjectId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "terms",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "termId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "subjects",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "subjectId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '45541cac48e4b4efe75e9e67f66852d0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bda4d2afe3acbe39cf9df39aa3205d55')"
     ]
   }
 }

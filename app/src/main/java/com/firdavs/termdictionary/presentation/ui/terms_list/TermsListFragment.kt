@@ -14,9 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
-import com.firdavs.termdictionary.presentation.model.TermUI
+import com.firdavs.termdictionary.presentation.model.toUI
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
-import com.firdavs.termdictionary.presentation.ui.filter_terms_list.TermsListFilterFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,8 +65,18 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         val major = arguments?.getString("major")
         val subject = arguments?.getString("subject")
         val isChosenSelected = arguments?.getBoolean("isChosenSelected") ?: false
-
         viewModel.isChosenSelected.value = isChosenSelected
+        if (!subject.isNullOrEmpty()) {
+            viewModel.subjectFilter.value = subject
+        }
+
+        viewModel.termsOfSubject.observe(viewLifecycleOwner) {
+            if (subject != null) {
+                termsAdapter.items = it.terms.toUI()
+            } else {
+                termsAdapter.items = viewModel.terms.value
+            }
+        }
     }
     
     private fun initNavigationDrawer() {

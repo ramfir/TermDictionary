@@ -30,6 +30,13 @@ class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewMode
     private val taskEventChannel = Channel<TermEvent>()
     val termEvent = taskEventChannel.receiveAsFlow()
 
+    val subjectFilter = MutableStateFlow("Введение в специальность")
+    private val subjectFilterFlow = subjectFilter.flatMapLatest {
+        termsInteractor.getTermsOfSubject(it)
+    }
+
+    val termsOfSubject = subjectFilterFlow.asLiveData()
+
     fun onTermClicked(term: TermUI, isChosenPropertyChanged: Boolean) {
         viewModelScope.launch {
             if (isChosenPropertyChanged) {

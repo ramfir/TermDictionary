@@ -6,20 +6,24 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.firdavs.termdictionary.data.room.dao.MajorsDao
 import com.firdavs.termdictionary.data.room.dao.SubjectsDao
+import com.firdavs.termdictionary.data.room.dao.TermSubjectDao
 import com.firdavs.termdictionary.data.room.dao.TermsDao
 import com.firdavs.termdictionary.data.room.entity.MajorDbEntity
 import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
+import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-@Database(version = 1, entities = [TermDbEntity::class, SubjectDBEntity::class, MajorDbEntity::class])
+@Database(version = 1,
+          entities = [TermDbEntity::class, SubjectDBEntity::class, MajorDbEntity::class, TermSubjectDbEntity::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getTermsDao(): TermsDao
     abstract fun getSubjectsDao(): SubjectsDao
     abstract fun getMajorsDao(): MajorsDao
+    abstract fun getTermSubjectDao(): TermSubjectDao
 
     class Callback(
             private val context: Context,
@@ -35,6 +39,20 @@ abstract class AppDatabase : RoomDatabase() {
                 addTerms(appDatabase.getTermsDao())
                 addSubjects(appDatabase.getSubjectsDao())
                 addMajors(appDatabase.getMajorsDao())
+                addTermSubject(appDatabase.getTermSubjectDao())
+            }
+        }
+
+        private fun addTermSubject(dao: TermSubjectDao) {
+            for (i in 1 .. 46) {
+                val termSubject = TermSubjectDbEntity(i.toLong(), 1)
+                dao.insertTermSubject(termSubject)
+            }
+            for (i in 47 .. 92) {
+                val termSubject1 = TermSubjectDbEntity(i.toLong(), 1)
+                val termSubject2 = TermSubjectDbEntity(i.toLong(), 2)
+                dao.insertTermSubject(termSubject1)
+                dao.insertTermSubject(termSubject2)
             }
         }
 

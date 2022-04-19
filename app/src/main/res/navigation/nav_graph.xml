@@ -25,11 +25,11 @@
         <argument
             android:name="major"
             app:argType="string"
-            android:defaultValue="Все" />
+            app:nullable="true" />
         <argument
             android:name="subject"
             app:argType="string"
-            android:defaultValue="Все" />
+            app:nullable="true" />
         <argument
             android:name="isChosenSelected"
             app:argType="boolean"

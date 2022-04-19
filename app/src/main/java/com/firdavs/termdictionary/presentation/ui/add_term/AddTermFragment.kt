@@ -37,15 +37,4 @@ class AddTermFragment: Fragment(R.layout.fragment_add_term) {
             }
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        setSubjectsAdapter()
-    }
-
-    private fun setSubjectsAdapter() {
-        val subjects = resources.getStringArray(R.array.subjects)
-        val subjectsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_filter_item, subjects)
-        binding.autoCompleteTextViewSubject.setAdapter(subjectsAdapter)
-    }
 }

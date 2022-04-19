@@ -12,4 +12,6 @@ class TermsInteractor(private val repository: TermsRepository) {
     suspend fun updateTerm(term: Term) = repository.updateTerm(term)
 
     suspend fun getRandomTerms(randomTermIDs: List<Int>) = repository.getRandomTerms(randomTermIDs)
+
+    fun getTermsOfSubject(subjectName: String) = repository.getTermsOfSubject(subjectName)
 }

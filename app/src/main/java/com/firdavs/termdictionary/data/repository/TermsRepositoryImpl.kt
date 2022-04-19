@@ -1,9 +1,11 @@
 package com.firdavs.termdictionary.data.repository
 
 import com.firdavs.termdictionary.data.room.dao.TermsDao
+import com.firdavs.termdictionary.data.room.entity.TermsOfSubjectDb
 import com.firdavs.termdictionary.data.room.entity.toData
 import com.firdavs.termdictionary.data.room.entity.toDomain
 import com.firdavs.termdictionary.domain.model.Term
+import com.firdavs.termdictionary.domain.model.TermsOfSubject
 import com.firdavs.termdictionary.domain.repository.TermsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -26,5 +28,9 @@ class TermsRepositoryImpl(
 
     override suspend fun getRandomTerms(randomTermIDs: List<Int>): List<Term> {
         return termsDao.getRandomTerms(randomTermIDs).map { it.toDomain() }
+    }
+
+    override fun getTermsOfSubject(subjectName: String): Flow<TermsOfSubject> {
+        return termsDao.getTermsOfSubject(subjectName).map { it.toDomain() }
     }
 }
