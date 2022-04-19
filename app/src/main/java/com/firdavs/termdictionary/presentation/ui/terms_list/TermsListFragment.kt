@@ -46,7 +46,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         initNavigationDrawer()
 
         binding.termsListRecyclerView.adapter = termsAdapter
-        viewModel.terms.observe(viewLifecycleOwner) { termsAdapter.items = it.toList() }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.termEvent.collect { event ->
@@ -70,15 +69,19 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             viewModel.subjectFilter.value = subject
         }
 
+        viewModel.terms.observe(viewLifecycleOwner) {
+            if (subject.isNullOrEmpty()) {
+                termsAdapter.items = it.toList()
+            }
+        }
+
         viewModel.termsOfSubject.observe(viewLifecycleOwner) {
-            if (subject != null) {
-                termsAdapter.items = it.terms.toUI()
-            } else {
-                termsAdapter.items = viewModel.terms.value
+            if (!subject.isNullOrEmpty()) {
+                termsAdapter.items = it
             }
         }
     }
-    
+
     private fun initNavigationDrawer() {
         toggle =
             ActionBarDrawerToggle(activity,
@@ -133,7 +136,9 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle?.onOptionsItemSelected(item) == true) { return true }
+        if (toggle?.onOptionsItemSelected(item) == true) {
+            return true
+        }
 
         if (item.itemId == R.id.action_filter) {
             val action =

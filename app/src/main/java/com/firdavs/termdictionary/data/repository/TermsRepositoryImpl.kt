@@ -4,6 +4,7 @@ import com.firdavs.termdictionary.data.room.dao.TermsDao
 import com.firdavs.termdictionary.data.room.entity.TermsOfSubjectDb
 import com.firdavs.termdictionary.data.room.entity.toData
 import com.firdavs.termdictionary.data.room.entity.toDomain
+import com.firdavs.termdictionary.domain.model.SubjectsOfTerm
 import com.firdavs.termdictionary.domain.model.Term
 import com.firdavs.termdictionary.domain.model.TermsOfSubject
 import com.firdavs.termdictionary.domain.repository.TermsRepository
@@ -32,5 +33,9 @@ class TermsRepositoryImpl(
 
     override fun getTermsOfSubject(subjectName: String): Flow<TermsOfSubject> {
         return termsDao.getTermsOfSubject(subjectName).map { it.toDomain() }
+    }
+
+    override fun getSubjectsOfTerm(termId: Long): Flow<SubjectsOfTerm> {
+        return termsDao.getSubjectsOfTerm(termId).map { it.toDomain() }
     }
 }

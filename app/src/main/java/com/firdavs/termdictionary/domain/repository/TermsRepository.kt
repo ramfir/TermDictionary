@@ -1,5 +1,6 @@
 package com.firdavs.termdictionary.domain.repository
 
+import com.firdavs.termdictionary.domain.model.SubjectsOfTerm
 import com.firdavs.termdictionary.domain.model.Term
 import com.firdavs.termdictionary.domain.model.TermsOfSubject
 import kotlinx.coroutines.flow.Flow
@@ -12,4 +13,6 @@ interface TermsRepository {
     suspend fun getRandomTerms(randomTermIDs: List<Int>): List<Term>
 
     fun getTermsOfSubject(subjectName: String): Flow<TermsOfSubject>
+
+    fun getSubjectsOfTerm(termId: Long): Flow<SubjectsOfTerm>
 }

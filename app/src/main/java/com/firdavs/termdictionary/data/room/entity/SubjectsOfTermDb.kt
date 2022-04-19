@@ -3,8 +3,9 @@ package com.firdavs.termdictionary.data.room.entity
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.firdavs.termdictionary.domain.model.SubjectsOfTerm
 
-data class SubjectsOfTerm(
+data class SubjectsOfTermDb(
         @Embedded val term: TermDbEntity,
 
         @Relation(
@@ -18,3 +19,6 @@ data class SubjectsOfTerm(
         )
         val subjects: List<SubjectDBEntity>
 )
+
+fun SubjectsOfTermDb.toDomain() = SubjectsOfTerm(term.toDomain(), subjects.toDomain())
+fun List<SubjectsOfTermDb>.toDomain() = map { it.toDomain() }

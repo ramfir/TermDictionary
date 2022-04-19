@@ -3,7 +3,7 @@ package com.firdavs.termdictionary.data.room.dao
 import androidx.room.*
 import com.firdavs.termdictionary.data.room.entity.TermsOfSubjectDb
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
-import com.firdavs.termdictionary.data.room.entity.SubjectsOfTerm
+import com.firdavs.termdictionary.data.room.entity.SubjectsOfTermDb
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,7 +23,8 @@ interface TermsDao {
 
     @Transaction
     @Query("SELECT * from terms WHERE id = :termId")
-    fun getSubjectsOfTerm(termId: Long): Flow<SubjectsOfTerm>
+    fun getSubjectsOfTerm(termId: Long): Flow<SubjectsOfTermDb>
+
 
     @Transaction
     @Query("SELECT * from subjects WHERE name = :subjectName")

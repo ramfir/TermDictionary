@@ -34,6 +34,7 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
         _binding = FragmentTermDetailsBinding.bind(view)
 
+        viewModel.termId.value = term!!.id
         initViews()
     }
 
@@ -67,7 +68,12 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
 
     private fun initViews() {
         with(binding) {
-            subject.setText("Введение в специальность")
+            viewModel.subjectsOfTerms.observe(viewLifecycleOwner) {
+                it.subjects.forEach {
+                    subject.append("${it.name} | ")
+                }
+            }
+            //subject.setText("Введение в специальность")
             definition.setText(term?.definition)
             translation.setText(term?.translation)
             notes.setText(term?.notes)

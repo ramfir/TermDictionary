@@ -6,7 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.firdavs.termdictionary.data.room.entity.TermsOfSubjectDb
 import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
-import com.firdavs.termdictionary.data.room.entity.SubjectsOfTerm
+import com.firdavs.termdictionary.data.room.entity.SubjectsOfTermDb
 
 @Dao
 interface TermSubjectDao {
@@ -17,7 +17,7 @@ interface TermSubjectDao {
 
     @Transaction
     @Query("SELECT * from terms WHERE id = :termId")
-    suspend fun getSubjectsOfTerm(termId: Long): List<SubjectsOfTerm>
+    suspend fun getSubjectsOfTerm(termId: Long): List<SubjectsOfTermDb>
 
     @Insert
     fun insertTermSubject(termSubject: TermSubjectDbEntity)

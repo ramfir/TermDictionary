@@ -2,6 +2,7 @@ package com.firdavs.termdictionary.presentation.mvvm.terms_list
 
 import androidx.lifecycle.*
 import com.firdavs.termdictionary.domain.model.Term
+import com.firdavs.termdictionary.domain.model.TermsOfSubject
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
@@ -10,7 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewModel() {
+class TermsListViewModel(private val termsInteractor: TermsInteractor) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
 
@@ -31,8 +32,20 @@ class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewMode
     val termEvent = taskEventChannel.receiveAsFlow()
 
     val subjectFilter = MutableStateFlow("Введение в специальность")
-    private val subjectFilterFlow = subjectFilter.flatMapLatest {
-        termsInteractor.getTermsOfSubject(it)
+    private val subjectFilterFlow: Flow<List<TermUI>> = combine(
+            isChosenSelected,
+            searchQuery,
+            subjectFilter
+    ) { isChosenSelected, query, subjectFilter ->
+        Triple(isChosenSelected, query, subjectFilter)
+    }.flatMapLatest { (isChosenSelected, query, subjectFilter) ->
+        termsInteractor
+            .getTermsOfSubject(subjectFilter)
+            .map {
+                it.terms
+                    .filter { (it.isChosen == isChosenSelected || it.isChosen) && it.name.contains(query, true) }
+                    .toUI()
+            }
     }
 
     val termsOfSubject = subjectFilterFlow.asLiveData()
@@ -48,6 +61,6 @@ class TermsListViewModel(private val termsInteractor: TermsInteractor): ViewMode
     }
 
     sealed class TermEvent {
-        data class NavigateToTermDetailsFragment(val term: TermUI): TermEvent()
+        data class NavigateToTermDetailsFragment(val term: TermUI) : TermEvent()
     }
 }
