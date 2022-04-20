@@ -75,11 +75,12 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             }
         }
 
-        viewModel.termsOfSubject.observe(viewLifecycleOwner) {
-            if (!subject.isNullOrEmpty()) {
+        if (!subject.isNullOrEmpty()) {
+            viewModel.termsOfSubject.observe(viewLifecycleOwner) {
                 termsAdapter.items = it
             }
         }
+
     }
 
     private fun initNavigationDrawer() {

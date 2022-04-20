@@ -38,8 +38,8 @@ abstract class AppDatabase : RoomDatabase() {
             applicationScope.launch {
                 addTerms(appDatabase.getTermsDao())
                 addSubjects(appDatabase.getSubjectsDao())
-                addMajors(appDatabase.getMajorsDao())
                 addTermSubject(appDatabase.getTermSubjectDao())
+                addMajors(appDatabase.getMajorsDao())
             }
         }
 
