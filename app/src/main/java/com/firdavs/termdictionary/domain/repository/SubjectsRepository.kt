@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface SubjectsRepository {
 
     fun getSubjects(): Flow<List<Subject>>
+
+    suspend fun getSubjectId(subject: String): Long
 }

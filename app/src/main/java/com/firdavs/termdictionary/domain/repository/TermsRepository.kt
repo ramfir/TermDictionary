@@ -15,4 +15,8 @@ interface TermsRepository {
     fun getTermsOfSubject(subjectName: String): Flow<TermsOfSubject>
 
     fun getSubjectsOfTerm(termId: Long): Flow<SubjectsOfTerm>
+
+    suspend fun insertTerm(term: Term): Long
+
+    suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long)
 }

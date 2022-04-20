@@ -34,7 +34,7 @@ val appModule = module {
     viewModel { TermsListViewModel(get()) }
     viewModel { TermDetailsViewModel(get()) }
     viewModel { TestFragmentViewModel(get()) }
-    viewModel { TermsListFilterViewModel(get(), get()) }
+    viewModel { TermsListFilterViewModel(get(), get(), get()) }
 }
 
 fun provideMajorsRepositoryImpl(database: AppDatabase): MajorsRepositoryImpl {
@@ -42,7 +42,7 @@ fun provideMajorsRepositoryImpl(database: AppDatabase): MajorsRepositoryImpl {
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {
-    return TermsRepositoryImpl(database.getTermsDao())
+    return TermsRepositoryImpl(database.getTermsDao(), database.getTermSubjectDao())
 }
 
 fun provideSubjectsRepositoryImpl(database: AppDatabase): SubjectsRepositoryImpl {

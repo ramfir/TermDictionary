@@ -20,5 +20,5 @@ interface TermSubjectDao {
     suspend fun getSubjectsOfTerm(termId: Long): List<SubjectsOfTermDb>
 
     @Insert
-    fun insertTermSubject(termSubject: TermSubjectDbEntity)
+    suspend fun insertTermSubject(termSubject: TermSubjectDbEntity)
 }

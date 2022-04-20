@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private fun addTermSubject(dao: TermSubjectDao) {
+        private suspend fun addTermSubject(dao: TermSubjectDao) {
             for (i in 1 .. 46) {
                 val termSubject = TermSubjectDbEntity(i.toLong(), 1)
                 dao.insertTermSubject(termSubject)

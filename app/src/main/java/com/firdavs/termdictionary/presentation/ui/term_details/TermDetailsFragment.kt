@@ -69,6 +69,7 @@ class TermDetailsFragment : Fragment(R.layout.fragment_term_details) {
     private fun initViews() {
         with(binding) {
             viewModel.subjectsOfTerms.observe(viewLifecycleOwner) {
+                subject.text?.clear()
                 it.subjects.forEach {
                     subject.append("${it.name} | ")
                 }

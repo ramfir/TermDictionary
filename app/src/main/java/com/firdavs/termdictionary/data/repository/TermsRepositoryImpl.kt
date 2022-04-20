@@ -1,6 +1,8 @@
 package com.firdavs.termdictionary.data.repository
 
+import com.firdavs.termdictionary.data.room.dao.TermSubjectDao
 import com.firdavs.termdictionary.data.room.dao.TermsDao
+import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
 import com.firdavs.termdictionary.data.room.entity.TermsOfSubjectDb
 import com.firdavs.termdictionary.data.room.entity.toData
 import com.firdavs.termdictionary.data.room.entity.toDomain
@@ -13,10 +15,19 @@ import kotlinx.coroutines.flow.map
 
 class TermsRepositoryImpl(
         private val termsDao: TermsDao,
+        private val termSubjectDao: TermSubjectDao
 ) : TermsRepository {
 
     override fun getTerms(searchQuery: String, isChosenSelected: Boolean): Flow<List<Term>> {
         return termsDao.getTerms(searchQuery, isChosenSelected).map { it.toDomain() }
+    }
+
+    override suspend fun insertTerm(term: Term): Long {
+        return termsDao.insertTerm(term.toData())
+    }
+
+    override suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long) {
+        termSubjectDao.insertTermSubject(TermSubjectDbEntity(termId, subjectId))
     }
 
     override suspend fun addTerm(term: Term) {

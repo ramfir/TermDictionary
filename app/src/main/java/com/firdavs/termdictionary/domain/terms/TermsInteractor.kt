@@ -16,4 +16,12 @@ class TermsInteractor(private val repository: TermsRepository) {
     fun getTermsOfSubject(subjectName: String) = repository.getTermsOfSubject(subjectName)
 
     fun getSubjectsOfTerm(termId: Long) = repository.getSubjectsOfTerm(termId)
+
+    suspend fun insertTerm(term: Term): Long {
+        return repository.insertTerm(term)
+    }
+
+    suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long) {
+        repository.insertTermSubjectConnection(termId, subjectId)
+    }
 }

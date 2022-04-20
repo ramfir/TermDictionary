@@ -16,7 +16,7 @@ interface TermsDao {
     suspend fun updateTerm(term: TermDbEntity)
 
     @Insert
-    suspend fun insertTerm(term: TermDbEntity)
+    suspend fun insertTerm(term: TermDbEntity): Long
 
     @Query("SELECT * FROM terms WHERE id IN(:randomTermIDs)")
     suspend fun getRandomTerms(randomTermIDs: List<Int>): List<TermDbEntity>

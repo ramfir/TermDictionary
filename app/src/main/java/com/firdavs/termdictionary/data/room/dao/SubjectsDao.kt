@@ -14,4 +14,7 @@ interface SubjectsDao {
 
     @Insert
     suspend fun insertSubject(subject: SubjectDBEntity)
+
+    @Query("SELECT id FROM subjects WHERE name = :subject")
+    suspend fun getSubjectId(subject: String): Long
 }

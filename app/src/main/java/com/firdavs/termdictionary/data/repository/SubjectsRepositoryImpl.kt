@@ -10,4 +10,8 @@ import kotlinx.coroutines.flow.map
 class SubjectsRepositoryImpl(private val dao: SubjectsDao): SubjectsRepository {
 
     override fun getSubjects() = dao.getSubjects().map { it.toDomain() }
+
+    override suspend fun getSubjectId(subject: String): Long {
+        return dao.getSubjectId(subject)
+    }
 }
