@@ -2,8 +2,10 @@ package com.firdavs.termdictionary.presentation.ui.add_term
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.firdavs.termdictionary.R
@@ -86,11 +88,17 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
             return
         }
         viewModel.insertTerm(subject, TermUI(0, name, definition, translation, notes, false))
-        Toast.makeText(requireContext(), "ВЕРНО", Toast.LENGTH_SHORT).show()
+        hideKeyboard()
+        Toast.makeText(requireContext(), "Термин добавлен", Toast.LENGTH_SHORT).show()
     }
 
     private fun TextInputLayout.setErrorMessage(errorText: String? = null) {
         error = errorText
         isErrorEnabled = errorText != null
+    }
+
+    private fun hideKeyboard() {
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 }

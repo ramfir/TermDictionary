@@ -8,4 +8,6 @@ interface SubjectsRepository {
     fun getSubjects(): Flow<List<Subject>>
 
     suspend fun getSubjectId(subject: String): Long
+
+    suspend fun insertSubject(subject: Subject): Long
 }

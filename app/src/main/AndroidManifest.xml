@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.firdavs.termdictionary">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -12,6 +13,7 @@
         android:theme="@style/Theme.TermDictionary">
         <activity
             android:name="com.firdavs.termdictionary.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

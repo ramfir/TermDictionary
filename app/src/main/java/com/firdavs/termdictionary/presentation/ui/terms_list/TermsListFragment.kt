@@ -1,14 +1,19 @@
 package com.firdavs.termdictionary.presentation.ui.terms_list
 
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +24,7 @@ import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewMode
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
@@ -35,6 +41,17 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                                              viewModel.onTermClicked(term, changeChosenProperty)
                                          })
     }
+
+    private val getContent: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
+            fileUri?.let {
+                val newTerms =
+                    requireActivity().contentResolver.openInputStream(it)?.bufferedReader()?.readLines()
+                viewModel.addNewTerms(newTerms)
+                return@registerForActivityResult
+            }
+            Toast.makeText(requireContext(), "Файл не выбран", Toast.LENGTH_LONG).show()
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -56,6 +73,9 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                                     event.term,
                                     event.term.name)
                         findNavController().navigate(action)
+                    }
+                    is TermsListViewModel.TermEvent.ShowMessage -> {
+                        Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -111,9 +131,12 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 R.id.settings -> Toast
                     .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
                     .show()
-                R.id.import_terms -> Toast
-                    .makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT)
-                    .show()
+                R.id.import_terms -> {
+                    Toast
+                        .makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT)
+                        .show()
+                    getContent.launch("text/*")
+                }
                 R.id.contact -> Toast
                     .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
                     .show()

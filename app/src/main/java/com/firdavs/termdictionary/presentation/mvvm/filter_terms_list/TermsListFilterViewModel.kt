@@ -20,7 +20,6 @@ class TermsListFilterViewModel(
         viewModelScope.launch {
             val termId: Long = termsInteractor.insertTerm(term.toDomain())
             val subjectId: Long = subjectsInteractor.getSubjectId(subject)
-            println("mmm $termId $subjectId")
             termsInteractor.insertTermSubjectConnection(termId, subjectId)
         }
     }

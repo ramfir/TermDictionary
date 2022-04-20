@@ -31,7 +31,7 @@ val appModule = module {
     single<TermsInteractor> { TermsInteractor(get()) }
     single<SubjectsInteractor> { SubjectsInteractor(get()) }
     single<MajorsInteractor> { MajorsInteractor(get()) }
-    viewModel { TermsListViewModel(get()) }
+    viewModel { TermsListViewModel(get(), get()) }
     viewModel { TermDetailsViewModel(get()) }
     viewModel { TestFragmentViewModel(get()) }
     viewModel { TermsListFilterViewModel(get(), get(), get()) }

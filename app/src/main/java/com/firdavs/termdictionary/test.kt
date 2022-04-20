@@ -3,16 +3,27 @@ package com.firdavs.termdictionary
 import java.io.File
 
 fun main() {
-
-    val number = listOf(1, 2, 3, 4, 5, 6, 7, 8)
-    val odds = number.filterIndexed { index, _ -> index % 2 == 0}
-    val others = number.filterIndexed { index, _ -> index % 2 == 1}
-    println(number)
-    println(odds)
-    println(others)
     //printTerms()
     //printDefinitions()
     //printTranslations()
+    newTerms()
+}
+
+fun newTerms() {
+    val newTerms = File("C:\\Users\\Firdavs\\Desktop\\importTerms.txt").bufferedReader().readLines()
+    var subject = ""
+    newTerms.forEach {
+        val elements = it.split(";")
+        if (elements.size == 1 && elements[0].isNotBlank()) {
+            subject = elements[0].trim()
+            println(subject)
+        } else if (elements.size == 3) {
+            val name = elements[0].trim()
+            val definition = elements[1].trim()
+            val translation = elements[2].trim()
+            println("$name -- $definition -- $translation -- $subject")
+        }
+    }
 }
 
 fun printTranslations() {

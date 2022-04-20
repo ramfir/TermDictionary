@@ -13,7 +13,7 @@ interface SubjectsDao {
     fun getSubjects(): Flow<List<SubjectDBEntity>>
 
     @Insert
-    suspend fun insertSubject(subject: SubjectDBEntity)
+    suspend fun insertSubject(subject: SubjectDBEntity): Long
 
     @Query("SELECT id FROM subjects WHERE name = :subject")
     suspend fun getSubjectId(subject: String): Long
