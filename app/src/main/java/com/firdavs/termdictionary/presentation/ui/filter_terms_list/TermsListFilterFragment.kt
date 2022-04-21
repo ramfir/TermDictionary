@@ -31,13 +31,11 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
         _binding = FragmentFilterTermsListBinding.inflate(inflater, container, false)
 
         binding.buttonApplyFilter.setOnClickListener {
-            val major = binding.autoCompleteTextViewMajor.text
             val subject = binding.autoCompleteTextViewSubject.text
             val isChosenSelected = binding.chosenSwitch.isChecked
             val action =
                 TermsListFilterFragmentDirections
                     .actionTermsListFilterFragmentToTermsListFragment2(isChosenSelected = isChosenSelected,
-                                                                       major = major.toString(),
                                                                        subject = subject.toString())
             findNavController().navigate(action)
             dismiss()
@@ -51,13 +49,6 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
 
         viewModel.subjects.observe(viewLifecycleOwner) {
             binding.autoCompleteTextViewSubject.setAdapter(
-                    ArrayAdapter(requireContext(),
-                                 R.layout.dropdown_filter_item,
-                                 it.map { it.name })
-            )
-        }
-        viewModel.majors.observe(viewLifecycleOwner) {
-            binding.autoCompleteTextViewMajor.setAdapter(
                     ArrayAdapter(requireContext(),
                                  R.layout.dropdown_filter_item,
                                  it.map { it.name })

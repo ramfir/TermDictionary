@@ -23,10 +23,6 @@
             android:id="@+id/action_termsListFragment_to_testFragment"
             app:destination="@id/testFragment" />
         <argument
-            android:name="major"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
             android:name="subject"
             app:argType="string"
             app:nullable="true" />
