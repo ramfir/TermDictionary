@@ -9,9 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SubjectsDao {
 
-    @Query("SELECT * FROM subjects")
+    @Query("SELECT * FROM subjects ORDER BY name")
     fun getSubjects(): Flow<List<SubjectDBEntity>>
 
+    // FIXME handle subjects repetition
     @Insert
     suspend fun insertSubject(subject: SubjectDBEntity): Long
 

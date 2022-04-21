@@ -61,6 +61,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
             }
 
             buttonAddTerm.setOnClickListener {
+                hideKeyboard()
                 addTerm(
                         termName.textInputEditTextData.text.toString(),
                         termTranslation.textInputEditTextData.text.toString(),
@@ -88,8 +89,24 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
             return
         }
         viewModel.insertTerm(subject, TermUI(0, name, definition, translation, notes, false))
-        hideKeyboard()
         Toast.makeText(requireContext(), "Термин добавлен", Toast.LENGTH_SHORT).show()
+        clearEditTexts()
+    }
+
+    private fun clearEditTexts() {
+        with(binding) {
+            termName.textInputEditTextData.text?.clear()
+            termName.textInputLayoutTitle.setErrorMessage(null)
+            termTranslation.textInputEditTextData.text?.clear()
+            termTranslation.textInputLayoutTitle.setErrorMessage(null)
+            autoCompleteTextViewSubject.text?.clear()
+            textInputLayoutSubjects.setErrorMessage(null)
+            termDefinition.textInputEditTextData.text?.clear()
+            termDefinition.textInputLayoutTitle.setErrorMessage(null)
+            termNotes.textInputEditTextData.text?.clear()
+            termNotes.textInputLayoutTitle.setErrorMessage(null)
+            buttonAddTerm.requestFocusFromTouch()
+        }
     }
 
     private fun TextInputLayout.setErrorMessage(errorText: String? = null) {

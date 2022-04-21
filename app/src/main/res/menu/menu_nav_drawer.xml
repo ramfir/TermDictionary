@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_star"
-        android:id="@+id/chosen_terms"
-        android:title="@string/chosen" />
-    <item
         android:icon="@drawable/img_pen"
         android:id="@+id/test"
         android:title="@string/test" />

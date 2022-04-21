@@ -1,8 +1,12 @@
-package com.firdavs.termdictionary.data.room.entity
+package com.firdavs.termdictionary.data.model
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
+import com.firdavs.termdictionary.data.room.entity.TermDbEntity
+import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
+import com.firdavs.termdictionary.data.room.entity.toDomain
 import com.firdavs.termdictionary.domain.model.TermsOfSubject
 
 data class TermsOfSubjectDb(

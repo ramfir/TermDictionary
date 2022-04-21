@@ -33,7 +33,7 @@ val appModule = module {
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {
-    return TermsRepositoryImpl(database.getTermsDao(), database.getTermSubjectDao())
+    return TermsRepositoryImpl(database.getTermsDao())
 }
 
 fun provideSubjectsRepositoryImpl(database: AppDatabase): SubjectsRepositoryImpl {

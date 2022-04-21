@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.firdavs.termdictionary.data.room.dao.SubjectsDao
-import com.firdavs.termdictionary.data.room.dao.TermSubjectDao
 import com.firdavs.termdictionary.data.room.dao.TermsDao
 import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
@@ -20,7 +19,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getTermsDao(): TermsDao
     abstract fun getSubjectsDao(): SubjectsDao
-    abstract fun getTermSubjectDao(): TermSubjectDao
 
     class Callback(
             private val context: Context,
@@ -35,11 +33,11 @@ abstract class AppDatabase : RoomDatabase() {
             applicationScope.launch {
                 addTerms(appDatabase.getTermsDao())
                 addSubjects(appDatabase.getSubjectsDao())
-                addTermSubject(appDatabase.getTermSubjectDao())
+                addTermSubject(appDatabase.getTermsDao())
             }
         }
 
-        private suspend fun addTermSubject(dao: TermSubjectDao) {
+        private suspend fun addTermSubject(dao: TermsDao) {
             for (i in 1 .. 46) {
                 val termSubject = TermSubjectDbEntity(i.toLong(), 1)
                 dao.insertTermSubject(termSubject)
