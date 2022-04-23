@@ -36,7 +36,11 @@ class TermsListFilterFragment : DialogFragment(R.layout.fragment_filter_terms_li
             val action =
                 TermsListFilterFragmentDirections
                     .actionTermsListFilterFragmentToTermsListFragment2(isChosenSelected = isChosenSelected,
-                                                                       subject = subject.toString())
+                                                                       subject = subject.toString(),
+                                                                       subjectName = if (subject
+                                                                               .toString()
+                                                                               .isBlank()
+                                                                       ) "Термины" else subject.toString())
             findNavController().navigate(action)
             dismiss()
         }

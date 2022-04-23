@@ -131,12 +131,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 R.id.settings -> Toast
                     .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
                     .show()
-                R.id.import_terms -> {
-                    Toast
-                        .makeText(requireContext(), R.string.import_terms, Toast.LENGTH_SHORT)
-                        .show()
-                    getContent.launch("text/*")
-                }
+                R.id.import_terms -> { getContent.launch("text/*") }
                 R.id.contact -> Toast
                     .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
                     .show()

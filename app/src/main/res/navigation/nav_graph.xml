@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/termsListFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.terms_list.TermsListFragment"
-        android:label="@string/terms"
+        android:label="{subjectName}"
         tools:layout="@layout/fragment_terms_list">
         <action
             android:id="@+id/action_termsListFragment_to_termDetailFragment"
@@ -28,8 +28,12 @@
             app:nullable="true" />
         <argument
             android:name="isChosenSelected"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="subjectName"
+            android:defaultValue="Термины"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -50,7 +54,9 @@
         tools:layout="@layout/fragment_filter_terms_list" >
         <action
             android:id="@+id/action_termsListFilterFragment_to_termsListFragment2"
-            app:destination="@id/termsListFragment" />
+            app:destination="@id/termsListFragment"
+            app:popUpTo="@id/termsListFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/addTermFragment"

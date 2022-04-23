@@ -1,6 +1,8 @@
 package com.firdavs.termdictionary.data.room
 
 import android.content.Context
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -31,9 +33,13 @@ abstract class AppDatabase : RoomDatabase() {
             super.onCreate(db)
 
             applicationScope.launch {
-                addTerms(appDatabase.getTermsDao())
-                addSubjects(appDatabase.getSubjectsDao())
-                addTermSubject(appDatabase.getTermsDao())
+                try {
+                    addTerms(appDatabase.getTermsDao())
+                    addSubjects(appDatabase.getSubjectsDao())
+                    addTermSubject(appDatabase.getTermsDao())
+                } catch(e: SQLiteConstraintException) {
+                    Log.d("MyApp", "${e.stackTrace}")
+                }
             }
         }
 

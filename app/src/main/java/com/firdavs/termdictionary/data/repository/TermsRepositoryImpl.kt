@@ -1,5 +1,7 @@
 package com.firdavs.termdictionary.data.repository
 
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import com.firdavs.termdictionary.data.model.toDomain
 import com.firdavs.termdictionary.data.room.dao.TermsDao
 import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
@@ -25,7 +27,11 @@ class TermsRepositoryImpl(
     }
 
     override suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long) {
-        termsDao.insertTermSubject(TermSubjectDbEntity(termId, subjectId))
+        try {
+            termsDao.insertTermSubject(TermSubjectDbEntity(termId, subjectId))
+        } catch(e: SQLiteConstraintException) {
+            Log.d("MyApp", "${e.stackTrace}")
+        }
     }
 
     override suspend fun addTerm(term: Term) {

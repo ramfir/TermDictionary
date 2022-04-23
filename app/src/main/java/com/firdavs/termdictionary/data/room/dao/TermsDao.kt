@@ -9,23 +9,20 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TermsDao {
-    // FIXME term ordering not working properly
-    @Query("SELECT * FROM terms WHERE (isChosen = :isChosenSelected OR isChosen = 1) " +
-                   "AND name LIKE '%' || :searchQuery || '%' ORDER BY name")
+
+    @Query("SELECT * FROM terms WHERE (isChosen = :isChosenSelected OR isChosen = 1) AND name LIKE '%' || :searchQuery || '%' ORDER BY LOWER(name)")
     fun getTerms(searchQuery: String, isChosenSelected: Boolean): Flow<List<TermDbEntity>>
 
     @Update
     suspend fun updateTerm(term: TermDbEntity)
 
-    // FIXME handle term repetition
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTerm(term: TermDbEntity): Long
 
     @Query("SELECT * FROM terms WHERE id IN(:randomTermIDs)")
     suspend fun getRandomTerms(randomTermIDs: List<Int>): List<TermDbEntity>
 
-    // FIXME maybe repetition
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTermSubject(termSubject: TermSubjectDbEntity)
 
     @Transaction
