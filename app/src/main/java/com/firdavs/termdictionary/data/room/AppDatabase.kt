@@ -38,21 +38,30 @@ abstract class AppDatabase : RoomDatabase() {
                     addSubjects(appDatabase.getSubjectsDao())
                     addTermSubject(appDatabase.getTermsDao())
                 } catch(e: SQLiteConstraintException) {
-                    Log.d("MyApp", "${e.stackTrace}")
+                    Log.d("MyApp", "${e.message}")
                 }
             }
         }
 
         private suspend fun addTermSubject(dao: TermsDao) {
             for (i in 1 .. 46) {
-                val termSubject = TermSubjectDbEntity(i.toLong(), 1)
-                dao.insertTermSubject(termSubject)
+                try {
+                    val termSubject = TermSubjectDbEntity(i.toLong(), 1)
+                    dao.insertTermSubject(termSubject)
+                } catch(e: SQLiteConstraintException) {
+                    Log.d("MyApp", "$i --> ${e.message}")
+                }
             }
             for (i in 47 .. 92) {
-                val termSubject1 = TermSubjectDbEntity(i.toLong(), 1)
-                val termSubject2 = TermSubjectDbEntity(i.toLong(), 2)
-                dao.insertTermSubject(termSubject1)
-                dao.insertTermSubject(termSubject2)
+                try {
+                    val termSubject1 = TermSubjectDbEntity(i.toLong(), 1)
+                    val termSubject2 = TermSubjectDbEntity(i.toLong(), 2)
+                    dao.insertTermSubject(termSubject1)
+                    dao.insertTermSubject(termSubject2)
+                } catch(e: SQLiteConstraintException) {
+                    Log.d("MyApp", "$i --> ${e.message}")
+                }
+
             }
         }
 
