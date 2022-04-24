@@ -18,7 +18,7 @@
             layout="@layout/add_term" />
 
         <include
-            android:id="@+id/term_translation"
+            android:id="@+id/term_definition"
             layout="@layout/add_term" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +39,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <include
-            android:id="@+id/term_definition"
+            android:id="@+id/term_translation"
             layout="@layout/add_term" />
 
         <include
