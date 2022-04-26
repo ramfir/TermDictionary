@@ -2,7 +2,6 @@ package com.firdavs.termdictionary.presentation.ui.terms_list
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -13,18 +12,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
+import com.firdavs.termdictionary.data.model.UserData
+import com.firdavs.termdictionary.data.model.toUI
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
-import com.firdavs.termdictionary.presentation.model.toUI
+import com.firdavs.termdictionary.presentation.mvvm.terms_list.FirestoreTermsListViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 
 class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
@@ -34,6 +33,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     private var toggle: ActionBarDrawerToggle? = null
 
     private val viewModel: TermsListViewModel by viewModel()
+    private val firestoreViewModel: FirestoreTermsListViewModel by viewModel()
 
     private val termsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
@@ -64,6 +64,10 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         binding.termsListRecyclerView.adapter = termsAdapter
 
+        firestoreViewModel._terms.observe(viewLifecycleOwner) {
+            termsAdapter.items = it.toUI()
+        }
+
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.termEvent.collect { event ->
                 when (event) {
@@ -80,6 +84,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 }
             }
         }
+        var user = arguments?.get("user") as UserData?
 
         val major = arguments?.getString("major")
         val subject = arguments?.getString("subject")
@@ -89,15 +94,17 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             viewModel.subjectFilter.value = subject
         }
 
+        println("mmm TermsListFragment $user")
+
         viewModel.terms.observe(viewLifecycleOwner) {
             if (subject.isNullOrEmpty()) {
-                termsAdapter.items = it.toList()
+                //termsAdapter.items = it.toList()
             }
         }
 
         if (!subject.isNullOrEmpty()) {
             viewModel.termsOfSubject.observe(viewLifecycleOwner) {
-                termsAdapter.items = it
+                //termsAdapter.items = it
             }
         }
 

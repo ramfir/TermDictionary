@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/termsListFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/termsListFragment"
@@ -34,6 +34,11 @@
             android:name="subjectName"
             android:defaultValue="Термины"
             app:argType="string" />
+        <argument
+            android:name="user"
+            app:argType="com.firdavs.termdictionary.data.model.UserData"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -68,4 +73,25 @@
         android:name="com.firdavs.termdictionary.presentation.ui.test.TestFragment"
         android:label="@string/test"
         tools:layout="@layout/fragment_test" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_termsListFragment"
+            app:destination="@id/termsListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.login.SignUpFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_termsListFragment"
+            app:destination="@id/termsListFragment" />
+    </fragment>
 </navigation>

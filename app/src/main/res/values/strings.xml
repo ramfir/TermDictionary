@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TermDictionary</string>
     <string name="terms">Terms</string>
+    <string name="login">Логин</string>
+    <string name="sign_up">Регистрация</string>
     <string name="term_detail">Term Details</string>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
