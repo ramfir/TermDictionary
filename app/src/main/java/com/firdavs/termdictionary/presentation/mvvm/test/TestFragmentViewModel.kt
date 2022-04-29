@@ -29,9 +29,13 @@ class TestFragmentViewModel(private val termsInteractor: TermsInteractor): ViewM
     private fun getRandomTerms() {
         viewModelScope.launch {
             val randomTermIDs = List(4) { Random.nextInt(1, 92)}
-            terms.value = termsInteractor.getRandomTerms(randomTermIDs).also {
-                answer.value = it.random()
+            val randomTerms = termsInteractor.getRandomTerms(randomTermIDs)
+            if (randomTerms.size != 4) {
+                getRandomTerms()
+                return@launch
             }
+            terms.value = randomTerms
+            answer.value = randomTerms.random()
         }
     }
 
