@@ -1,5 +1,6 @@
 package com.firdavs.termdictionary.presentation.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -22,9 +23,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val viewModel: LoginViewModel by viewModel()
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+
 
         binding.buttonLoginAsStudent.setOnClickListener {
             Toast
@@ -56,12 +59,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     }
                     is LoginViewModel.SignUpEvent.NavigateToTermsListFragment -> {
                         val login = binding.textInputEditTextLogin.text.toString()
+                        val sharedPref =
+                            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                                   Context.MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString(getString(R.string.saved_login_key), login)
+                            apply()
+                        }
                         Toast
                             .makeText(requireContext(), "Вы вошли как $login", Toast.LENGTH_LONG)
                             .show()
-                        val action = LoginFragmentDirections.actionLoginFragmentToTermsListFragment(
-                            null,
-                            user = event.user)
+                        val action = LoginFragmentDirections.actionLoginFragmentToTermsListFragment(null)
                         findNavController().navigate(action)
                     }
                 }

@@ -1,5 +1,6 @@
 package com.firdavs.termdictionary.presentation.ui.add_term
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -23,13 +24,16 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
 
     private val viewModel: TermsListFilterViewModel by viewModel()
 
-    private var user: UserData? = null
+    private var userLogin: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAddTermBinding.bind(view)
 
-        user = arguments?.get("user") as UserData?
+        val sharedPref =
+            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                   Context.MODE_PRIVATE)
+        userLogin = sharedPref.getString(getString(R.string.saved_login_key), null)
 
         setupViews()
     }
@@ -67,7 +71,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
 
             buttonAddTerm.setOnClickListener {
                 hideKeyboard()
-                addTerm(user,
+                addTerm(userLogin,
                         termName.textInputEditTextData.text.toString(),
                         termTranslation.textInputEditTextData.text.toString(),
                         autoCompleteTextViewSubject.text.toString(),
@@ -79,7 +83,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
     }
 
     private fun addTerm(
-        user: UserData?,
+        userLogin: String?,
         name: String,
         translation: String,
         subject: String,
@@ -94,7 +98,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
             if (subject.isBlank()) binding.textInputLayoutSubjects.setErrorMessage("Выберите дисциплину")
             return
         }
-        viewModel.insertTerm(user, subject, TermUI(0, name, definition, translation, notes, false))
+        viewModel.insertTerm(userLogin, subject, TermUI(0, name, definition, translation, notes, false))
         Toast.makeText(requireContext(), "Термин добавлен", Toast.LENGTH_SHORT).show()
         clearEditTexts()
     }

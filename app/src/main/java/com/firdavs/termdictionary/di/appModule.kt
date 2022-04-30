@@ -12,7 +12,6 @@ import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.mvvm.filter_terms_list.TermsListFilterViewModel
 import com.firdavs.termdictionary.presentation.mvvm.login.LoginViewModel
 import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
-import com.firdavs.termdictionary.presentation.mvvm.terms_list.FirestoreTermsListViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import com.firdavs.termdictionary.presentation.mvvm.test.TestFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +28,6 @@ val appModule = module {
     single<TermsInteractor> { TermsInteractor(get()) }
     single<SubjectsInteractor> { SubjectsInteractor(get()) }
     viewModel { TermsListViewModel(get(), get(), androidContext()) }
-    viewModel { FirestoreTermsListViewModel() }
     viewModel { TermDetailsViewModel(get()) }
     viewModel { TestFragmentViewModel(get()) }
     viewModel { TermsListFilterViewModel(get(), get()) }

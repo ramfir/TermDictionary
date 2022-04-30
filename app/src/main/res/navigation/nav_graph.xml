@@ -34,11 +34,6 @@
             android:name="subjectName"
             android:defaultValue="Термины"
             app:argType="string" />
-        <argument
-            android:name="user"
-            app:argType="com.firdavs.termdictionary.data.model.UserData"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -67,12 +62,7 @@
         android:id="@+id/addTermFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.add_term.AddTermFragment"
         android:label="@string/add_term"
-        tools:layout="@layout/fragment_add_term" >
-        <argument
-            android:name="user"
-            app:argType="com.firdavs.termdictionary.data.model.UserData"
-            app:nullable="true" />
-    </fragment>
+        tools:layout="@layout/fragment_add_term" />
     <fragment
         android:id="@+id/testFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.test.TestFragment"

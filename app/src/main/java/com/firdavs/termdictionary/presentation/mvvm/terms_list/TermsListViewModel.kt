@@ -29,30 +29,6 @@ class TermsListViewModel(
 
     init {
         //addTermsToFirestore()
-        //addTermsFromFirestoreToRoom()
-    }
-
-    private fun addTermsFromFirestoreToRoom() {
-        viewModelScope.launch {
-            val termsFromFirestore = FirebaseService.getTerms()
-            termsFromFirestore.forEach { termFirestore ->
-                var subjectId = subjectsInteractor.insertSubject(Subject(0, termFirestore.subject))
-                if (subjectId == (-1).toLong()) {
-                    subjectId = subjectsInteractor.getSubjectId(termFirestore.subject)
-                }
-                //println("mmm addTermsFromFirestoreToRoom subjectId=$subjectId")
-                var termId = termsInteractor.insertTerm(Term(0,
-                                                             termFirestore.name,
-                                                             termFirestore.definition,
-                                                             termFirestore.translation,
-                                                             "",
-                                                             false))
-                if (termId == (-1).toLong()) {
-                    termId = termsInteractor.getTermId(termFirestore.name, termFirestore.definition)
-                }
-                termsInteractor.insertTermSubjectConnection(termId, subjectId)
-            }
-        }
     }
 
     fun addTermsFromFirestore(newTerms: List<TermFirestore>) {
@@ -73,7 +49,6 @@ class TermsListViewModel(
                 }
                 termsInteractor.insertTermSubjectConnection(termId, subjectId)
             }
-
         }
     }
 
@@ -102,27 +77,10 @@ class TermsListViewModel(
                 FirebaseService.addTerm(newTerm.toFirestore("Проектирование человеко-машинного взаимодействия"))
             }
         }
-        loadTerms()
-    }
-
-    private fun loadTerms() {
-        val firestoreDb = FirebaseFirestore.getInstance()
-
-        firestoreDb.collection("Term").get()
-            .addOnSuccessListener {
-                for (documentSnapshot in it) {
-                    val myTerm = documentSnapshot.toObject(TermUI::class.java)
-
-                    //println("mmm $myTerm")
-                }
-                //println("mmm ${it.size()}")
-            }
     }
 
     val searchQuery = MutableStateFlow("")
-
     val isChosenSelected = MutableStateFlow(false)
-
     private val termsFlow = combine(
         searchQuery,
         isChosenSelected
@@ -131,7 +89,6 @@ class TermsListViewModel(
     }.flatMapLatest { (query, isChosenSelected) ->
         termsInteractor.getTerms(query, isChosenSelected).map { it.toUI() }
     }
-
     val terms = termsFlow.asLiveData()
 
     private val termsEventChannel = Channel<TermEvent>()
@@ -156,7 +113,6 @@ class TermsListViewModel(
                     .toUI()
             }
     }
-
     val termsOfSubject = subjectFilterFlow.asLiveData()
 
     fun onTermClicked(term: TermUI, isChosenPropertyChanged: Boolean) {
@@ -180,7 +136,9 @@ class TermsListViewModel(
                     if (elements.size == 1 && elements[0].isNotBlank()) {
                         val subject = Subject(0, elements[0].trim())
                         subjectId = subjectsInteractor.insertSubject(subject)
-                        println("mmm addNewTerms subjectId=$subjectId")
+                        if (subjectId == (-1).toLong()) {
+                            subjectId = subjectsInteractor.getSubjectId(subject.name)
+                        }
                     } else if (elements.size == 3) {
                         val term = Term(0,
                                         elements[0].trim(),
@@ -188,7 +146,10 @@ class TermsListViewModel(
                                         elements[2].trim(),
                                         "",
                                         false)
-                        val termId = termsInteractor.insertTerm(term)
+                        var termId = termsInteractor.insertTerm(term)
+                        if (termId == (-1).toLong()) {
+                            termId = termsInteractor.getTermId(term.name, term.definition)
+                        }
                         termsInteractor.insertTermSubjectConnection(termId, subjectId)
                     }
                 }
@@ -196,8 +157,6 @@ class TermsListViewModel(
             }
         }
     }
-
-
 
     sealed class TermEvent {
         data class ShowMessage(val message: String) : TermEvent()
