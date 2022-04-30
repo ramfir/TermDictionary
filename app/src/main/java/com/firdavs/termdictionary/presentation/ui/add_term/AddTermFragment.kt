@@ -88,7 +88,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
             if (subject.isBlank()) binding.textInputLayoutSubjects.setErrorMessage("Выберите дисциплину")
             return
         }
-        viewModel.insertTerm(subject, TermUI(0, name, definition, translation, notes, false))
+        viewModel.insertTerm(subject, TermUI(0, name, definition, translation, notes, false, listOf()))
         Toast.makeText(requireContext(), "Термин добавлен", Toast.LENGTH_SHORT).show()
         clearEditTexts()
     }

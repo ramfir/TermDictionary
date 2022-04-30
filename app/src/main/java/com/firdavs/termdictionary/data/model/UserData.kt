@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 data class UserData(
     val login: String,
     val password: String,
-    val isTeacher: Boolean = false
+    val isTeacher: Boolean = false,
+    val terms: List<String>
 ): Parcelable {
 
     companion object {
@@ -19,7 +20,8 @@ data class UserData(
                 val login = getString("login")!!
                 val password = getString("password")!!
                 val isTeacher = getBoolean("teacher")!!
-                return UserData(login, password, isTeacher)
+                val terms = get("terms") as List<String>
+                return UserData(login, password, isTeacher, terms)
             } catch (e: Exception) {
                 Log.e("MyApp", "Error converting user", e)
                 return null

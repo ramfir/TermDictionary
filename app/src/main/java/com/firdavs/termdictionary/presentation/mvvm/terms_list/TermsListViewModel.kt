@@ -2,7 +2,9 @@ package com.firdavs.termdictionary.presentation.mvvm.terms_list
 
 import android.content.Context
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import com.firdavs.termdictionary.domain.model.Subject
 import com.firdavs.termdictionary.domain.model.Term
@@ -12,7 +14,6 @@ import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
 import com.firdavs.termdictionary.presentation.model.toUI
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -41,9 +42,9 @@ class TermsListViewModel(
             .bufferedReader().readText().split("---").map { it.trim() }
 
         for (i in 0 until 92) {
-            val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false)
+            val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false, listOf())
 
-            firestoreDb.collection("Term").add(newTerm)
+            firestoreDb.collection("Terms").add(newTerm)
                 .addOnSuccessListener {
                     Toast.makeText(context, "Term added", Toast.LENGTH_LONG).show()
                 }

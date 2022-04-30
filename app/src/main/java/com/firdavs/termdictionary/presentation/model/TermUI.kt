@@ -12,9 +12,10 @@ data class TermUI(
         val translation: String = "",
         val notes: String = "",
         val isChosen: Boolean = false,
+        val userIds: List<String>
 ) : Parcelable
 
-fun Term.toUI() = TermUI(id, name, definition, translation, notes, isChosen)
+fun Term.toUI() = TermUI(id, name, definition, translation, notes, isChosen, listOf())
 fun List<Term>.toUI() = map { it.toUI() }
 
 fun TermUI.toDomain() = Term(id, name, definition, translation, notes, isChosen)

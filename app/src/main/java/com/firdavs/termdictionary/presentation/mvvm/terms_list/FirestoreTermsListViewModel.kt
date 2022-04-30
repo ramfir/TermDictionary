@@ -21,4 +21,18 @@ class FirestoreTermsListViewModel: ViewModel() {
             _terms.value = FirebaseService.getTermsFlow().asLiveData()
         }
     }*/
+
+    fun getTermIds() {
+        viewModelScope.launch {
+            val termIds = FirebaseService.getTermIds()
+            termIds.forEach {
+                println("mmm $it")
+            }
+            addTermsForUsers(termIds)
+        }
+    }
+
+    private suspend fun addTermsForUsers(termIds: List<String>) {
+        FirebaseService.addTermsForUsers(termIds)
+    }
 }

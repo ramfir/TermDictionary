@@ -31,7 +31,7 @@ class LoginViewModel: ViewModel() {
 
     fun onSignUpClicked(login: String, password: String) {
         viewModelScope.launch {
-            val user = UserData(login, password)
+            val user = UserData(login, password, terms= listOf())
             if (FirebaseService.isAccountFree(user)) {
                 FirebaseService.addUser(user)
                 signUpEventChannel.send(SignUpEvent.NavigateToTermsListFragment(user))

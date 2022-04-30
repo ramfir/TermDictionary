@@ -6,6 +6,7 @@ import com.firdavs.termdictionary.data.model.TermData.Companion.toTermData
 import com.firdavs.termdictionary.data.model.UserData
 import com.firdavs.termdictionary.data.model.UserData.Companion.toUserata
 import com.firdavs.termdictionary.domain.model.User
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -21,7 +22,7 @@ object FirebaseService {
 
     fun addUser(user: UserData) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("User").add(user)
+        db.collection("Users").add(user)
     }
 
     /*suspend fun getUser(user: UserData): UserData? {
@@ -53,7 +54,7 @@ object FirebaseService {
     fun getTermsFlow(): Flow<List<TermData>> {
         val db = FirebaseFirestore.getInstance()
         return callbackFlow {
-            val listenerRegistration = db.collection("Term")
+            val listenerRegistration = db.collection("Terms")
                 .addSnapshotListener {querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
                     if (firebaseFirestoreException != null) {
                         cancel(message = "Error getching terms",
@@ -73,22 +74,40 @@ object FirebaseService {
 
     suspend fun isAccountFree(user: UserData): Boolean {
         val db = FirebaseFirestore.getInstance()
-        val userRef = db.collection("User")
+        val userRef = db.collection("Users")
         val users = userRef.get().await().documents.mapNotNull { it.toUserata() }
         return users.none { user.login == it.login }
     }
 
     suspend fun doesAccountExists(user: UserData): Boolean {
         val db = FirebaseFirestore.getInstance()
-        val userRef = db.collection("User")
+        val userRef = db.collection("Users")
         val users = userRef.get().await().documents.mapNotNull { it.toUserata() }
         return users.any { user == it }
     }
 
     suspend fun getUser(login: String, password: String): UserData? {
         val db = FirebaseFirestore.getInstance()
-        val userRef = db.collection("User")
+        val userRef = db.collection("Users")
         val users = userRef.get().await().documents.mapNotNull { it.toUserata() }
         return users.find { it.login == login && it.password == password }
+    }
+
+    suspend fun getTermIds(): List<String> {
+        val db = FirebaseFirestore.getInstance()
+        val result: List<String> = db.collection("Terms").get().await().documents.mapNotNull { it.id }
+        return result
+    }
+
+    suspend fun addTermsForUsers(termIds: List<String>) {
+        val db = FirebaseFirestore.getInstance()
+        val userIds = db.collection("Users").get().await().documents.mapNotNull { it.id }
+        userIds.forEach { userId ->
+            println("mmm userId=$userId termIds=$termIds")
+            //db.document("Users/$userId").update("terms", FieldValue.arrayUnion(termIds))
+            termIds.forEach { termId ->
+                db.document("Users/$userId").update("terms", FieldValue.arrayUnion(termId))
+            }
+        }
     }
 }

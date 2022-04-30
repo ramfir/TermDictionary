@@ -14,7 +14,8 @@ data class TermData(
         val definition: String,
         val translation: String,
         val notes: String,
-        val isChosen: Boolean
+        val isChosen: Boolean,
+        val userIds: List<String>
 ): Parcelable {
 
     companion object {
@@ -25,7 +26,8 @@ data class TermData(
                 val translation = getString("translation")!!
                 val notes = getString("notes")!!
                 val isChosen = getBoolean("chosen")!!
-                return TermData(id, name, definition, translation, notes, isChosen)
+                val userIds = get("userIds") as List<String>
+                return TermData(id, name, definition, translation, notes, isChosen, userIds)
             } catch (e: Exception) {
                 Log.e("MyApp", "Error converting term", e)
                 return null
@@ -34,7 +36,7 @@ data class TermData(
     }
 
     fun toUI(): TermUI {
-        return TermUI(1.toLong(), name, definition, translation, notes, isChosen)
+        return TermUI(1.toLong(), name, definition, translation, notes, isChosen, userIds)
     }
 }
 

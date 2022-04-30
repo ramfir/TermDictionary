@@ -67,6 +67,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         firestoreViewModel._terms.observe(viewLifecycleOwner) {
             termsAdapter.items = it.toUI()
         }
+        firestoreViewModel.getTermIds()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.termEvent.collect { event ->
