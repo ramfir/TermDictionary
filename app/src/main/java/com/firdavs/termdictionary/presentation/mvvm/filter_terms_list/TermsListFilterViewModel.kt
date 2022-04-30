@@ -3,10 +3,13 @@ package com.firdavs.termdictionary.presentation.mvvm.filter_terms_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.firdavs.termdictionary.data.firestore.FirebaseService
+import com.firdavs.termdictionary.data.model.UserData
 import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
+import com.firdavs.termdictionary.presentation.model.toFirestore
 import kotlinx.coroutines.launch
 
 class TermsListFilterViewModel(
@@ -14,11 +17,15 @@ class TermsListFilterViewModel(
         private val subjectsInteractor: SubjectsInteractor,
 ) : ViewModel() {
 
-    fun insertTerm(subject: String, term: TermUI) {
+    fun insertTerm(user: UserData?, subject: String, term: TermUI) {
         viewModelScope.launch {
             val termId: Long = termsInteractor.insertTerm(term.toDomain())
             val subjectId: Long = subjectsInteractor.getSubjectId(subject)
             termsInteractor.insertTermSubjectConnection(termId, subjectId)
+
+            if (user != null) {
+                FirebaseService.addTerm(term.toFirestore(subject))
+            }
         }
     }
 

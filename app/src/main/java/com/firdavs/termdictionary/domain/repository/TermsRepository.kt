@@ -22,4 +22,6 @@ interface TermsRepository {
     suspend fun insertTerm(term: Term): Long
 
     suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long)
+
+    suspend fun getTermId(name: String, definition: String): Long
 }

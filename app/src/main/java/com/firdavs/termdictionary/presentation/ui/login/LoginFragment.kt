@@ -26,12 +26,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
 
-        binding.buttonSignUp.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+        binding.buttonLoginAsStudent.setOnClickListener {
+            Toast
+                .makeText(requireContext(), "Вы вошли как студент", Toast.LENGTH_LONG)
+                .show()
+            val action = LoginFragmentDirections.actionLoginFragmentToTermsListFragment(null)
             findNavController().navigate(action)
         }
 
-        binding.buttonLogin.setOnClickListener {
+        binding.buttonLoginAsTeacher.setOnClickListener {
             val login = binding.textInputEditTextLogin.text.toString()
             val password = binding.textInputEditTextPassword.text.toString()
 

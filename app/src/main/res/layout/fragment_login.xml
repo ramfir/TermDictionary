@@ -59,12 +59,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_login"
+        android:id="@+id/button_login_as_teacher"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/white"
-        android:text="Войти"
+        android:text="Войти как преподаватель"
         android:textAllCaps="false"
         android:textColor="@color/red_500"
         app:cornerRadius="8dp"
@@ -72,12 +72,12 @@
         app:strokeWidth="1dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_up"
+        android:id="@+id/button_login_as_student"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/white"
-        android:text="Зарегистрироваться"
+        android:text="Войти как студент"
         android:textAllCaps="false"
         android:textColor="@color/red_500"
         app:cornerRadius="8dp"

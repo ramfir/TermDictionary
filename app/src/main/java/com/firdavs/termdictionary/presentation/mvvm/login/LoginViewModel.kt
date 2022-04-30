@@ -29,7 +29,7 @@ class LoginViewModel: ViewModel() {
 
     }
 
-    fun onSignUpClicked(login: String, password: String) {
+    /*fun onSignUpClicked(login: String, password: String) {
         viewModelScope.launch {
             val user = UserData(login, password, terms= listOf())
             if (FirebaseService.isAccountFree(user)) {
@@ -39,7 +39,7 @@ class LoginViewModel: ViewModel() {
                 signUpEventChannel.send(SignUpEvent.AccountAlreadyTaken)
             }
         }
-    }
+    }*/
 
     sealed class SignUpEvent {
         object AccountAlreadyTaken: SignUpEvent()

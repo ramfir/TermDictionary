@@ -67,7 +67,12 @@
         android:id="@+id/addTermFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.add_term.AddTermFragment"
         android:label="@string/add_term"
-        tools:layout="@layout/fragment_add_term" />
+        tools:layout="@layout/fragment_add_term" >
+        <argument
+            android:name="user"
+            app:argType="com.firdavs.termdictionary.data.model.UserData"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="com.firdavs.termdictionary.presentation.ui.test.TestFragment"
@@ -80,18 +85,6 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_termsListFragment"
-            app:destination="@id/termsListFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.firdavs.termdictionary.presentation.ui.login.SignUpFragment"
-        android:label="@string/sign_up"
-        tools:layout="@layout/fragment_sign_up">
-        <action
-            android:id="@+id/action_signUpFragment_to_termsListFragment"
             app:destination="@id/termsListFragment" />
     </fragment>
 </navigation>

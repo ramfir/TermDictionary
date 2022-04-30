@@ -22,6 +22,10 @@ class TermsRepositoryImpl(
         return termsDao.getTerms(searchQuery, isChosenSelected).map { it.toDomain() }
     }
 
+    override suspend fun getTermId(name: String, definition: String): Long {
+        return termsDao.getTermId(name, definition)
+    }
+
     override suspend fun insertTerm(term: Term): Long {
         return termsDao.insertTerm(term.toData())
     }

@@ -1,11 +1,10 @@
 package com.firdavs.termdictionary.data.firestore
 
 import android.util.Log
-import com.firdavs.termdictionary.data.model.TermData
-import com.firdavs.termdictionary.data.model.TermData.Companion.toTermData
+import com.firdavs.termdictionary.data.model.TermFirestore
+import com.firdavs.termdictionary.data.model.TermFirestore.Companion.toTermFirestore
 import com.firdavs.termdictionary.data.model.UserData
 import com.firdavs.termdictionary.data.model.UserData.Companion.toUserata
-import com.firdavs.termdictionary.domain.model.User
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -20,30 +19,27 @@ import java.lang.Exception
 
 object FirebaseService {
 
-    fun addUser(user: UserData) {
+    suspend fun addTerm(term: TermFirestore) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("Users").add(user)
+        db.collection("Terms").add(term)
+            .addOnSuccessListener { println("mmm FirebaseService.addTerm success") }
+            .addOnFailureListener { println("mmm FirebaseService.addTerm failure") }
     }
 
-    /*suspend fun getUser(user: UserData): UserData? {
-        val db = FirebaseFirestore.getInstance()
-
-    }*/
-
-    suspend fun getTerm(id: String): TermData? {
+    suspend fun getTerm(id: String): TermFirestore? {
         val db = FirebaseFirestore.getInstance()
         return try {
-            db.collection("Term").document(id).get().await().toTermData()
+            db.collection("Term").document(id).get().await().toTermFirestore()
         } catch (e: Exception) {
             Log.e("MyApp", "Error getting term", e)
             null
         }
     }
 
-    suspend fun getTerms(): List<TermData> {
+    suspend fun getTerms(): List<TermFirestore> {
         val db = FirebaseFirestore.getInstance()
         return try {
-            db.collection("Term").get().await().documents.mapNotNull { it.toTermData() }
+            db.collection("Terms").get().await().documents.mapNotNull { it.toTermFirestore() }
         } catch (e: Exception) {
             Log.e("MyApp", "Error getting terms", e)
             emptyList()
@@ -51,7 +47,7 @@ object FirebaseService {
     }
 
     @ExperimentalCoroutinesApi
-    fun getTermsFlow(): Flow<List<TermData>> {
+    fun getTermsFlow(): Flow<List<TermFirestore>> {
         val db = FirebaseFirestore.getInstance()
         return callbackFlow {
             val listenerRegistration = db.collection("Terms")
@@ -61,7 +57,7 @@ object FirebaseService {
                         cause = firebaseFirestoreException)
                         return@addSnapshotListener
                     }
-                    val map = querySnapshot!!.documents.mapNotNull { it.toTermData() }
+                    val map = querySnapshot!!.documents.mapNotNull { it.toTermFirestore() }
                     offer(map)
                 }
             awaitClose {

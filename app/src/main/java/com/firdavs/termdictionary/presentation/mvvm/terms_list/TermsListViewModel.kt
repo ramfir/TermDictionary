@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.firdavs.termdictionary.data.firestore.FirebaseService
+import com.firdavs.termdictionary.data.model.TermFirestore
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import com.firdavs.termdictionary.domain.model.Subject
 import com.firdavs.termdictionary.domain.model.Term
@@ -12,6 +14,7 @@ import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
+import com.firdavs.termdictionary.presentation.model.toFirestore
 import com.firdavs.termdictionary.presentation.model.toUI
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.Channel
@@ -19,18 +22,62 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class TermsListViewModel(
-        private val termsInteractor: TermsInteractor,
-        private val subjectsInteractor: SubjectsInteractor,
-        private val context: Context,
+    private val termsInteractor: TermsInteractor,
+    private val subjectsInteractor: SubjectsInteractor,
+    private val context: Context,
 ) : ViewModel() {
 
     init {
         //addTermsToFirestore()
+        //addTermsFromFirestoreToRoom()
+    }
+
+    private fun addTermsFromFirestoreToRoom() {
+        viewModelScope.launch {
+            val termsFromFirestore = FirebaseService.getTerms()
+            termsFromFirestore.forEach { termFirestore ->
+                var subjectId = subjectsInteractor.insertSubject(Subject(0, termFirestore.subject))
+                if (subjectId == (-1).toLong()) {
+                    subjectId = subjectsInteractor.getSubjectId(termFirestore.subject)
+                }
+                //println("mmm addTermsFromFirestoreToRoom subjectId=$subjectId")
+                var termId = termsInteractor.insertTerm(Term(0,
+                                                             termFirestore.name,
+                                                             termFirestore.definition,
+                                                             termFirestore.translation,
+                                                             "",
+                                                             false))
+                if (termId == (-1).toLong()) {
+                    termId = termsInteractor.getTermId(termFirestore.name, termFirestore.definition)
+                }
+                termsInteractor.insertTermSubjectConnection(termId, subjectId)
+            }
+        }
+    }
+
+    fun addTermsFromFirestore(newTerms: List<TermFirestore>) {
+        viewModelScope.launch {
+            newTerms.forEach { termFirestore ->
+                var subjectId = subjectsInteractor.insertSubject(Subject(0, termFirestore.subject))
+                if (subjectId == (-1).toLong()) {
+                    subjectId = subjectsInteractor.getSubjectId(termFirestore.subject)
+                }
+                var termId = termsInteractor.insertTerm(Term(0,
+                                                             termFirestore.name,
+                                                             termFirestore.definition,
+                                                             termFirestore.translation,
+                                                             "",
+                                                             false))
+                if (termId == (-1).toLong()) {
+                    termId = termsInteractor.getTermId(termFirestore.name, termFirestore.definition)
+                }
+                termsInteractor.insertTermSubjectConnection(termId, subjectId)
+            }
+
+        }
     }
 
     private fun addTermsToFirestore() {
-        val firestoreDb = FirebaseFirestore.getInstance()
-
         val termsANDtranslations = context.assets
             .open("termsANDtranslations.txt")
             .bufferedReader()
@@ -41,18 +88,19 @@ class TermsListViewModel(
         val definitions = context.assets.open("definitions.txt")
             .bufferedReader().readText().split("---").map { it.trim() }
 
-        for (i in 0 until 92) {
-            val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false, listOf())
-
-            firestoreDb.collection("Terms").add(newTerm)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Term added", Toast.LENGTH_LONG).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-                }
+        for (i in 0 until 46) {
+            val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false)
+            viewModelScope.launch {
+                FirebaseService.addTerm(newTerm.toFirestore("Введение в специальность"))
+            }
             val term = TermDbEntity(0, terms[i], definitions[i], translations[i], "", false)
 
+        }
+        for (i in 46 until 92) {
+            val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false)
+            viewModelScope.launch {
+                FirebaseService.addTerm(newTerm.toFirestore("Проектирование человеко-машинного взаимодействия"))
+            }
         }
         loadTerms()
     }
@@ -76,8 +124,8 @@ class TermsListViewModel(
     val isChosenSelected = MutableStateFlow(false)
 
     private val termsFlow = combine(
-            searchQuery,
-            isChosenSelected
+        searchQuery,
+        isChosenSelected
     ) { query, isChosenSelected ->
         Pair(query, isChosenSelected)
     }.flatMapLatest { (query, isChosenSelected) ->
@@ -91,9 +139,9 @@ class TermsListViewModel(
 
     val subjectFilter = MutableStateFlow("Введение в специальность")
     private val subjectFilterFlow: Flow<List<TermUI>> = combine(
-            isChosenSelected,
-            searchQuery,
-            subjectFilter
+        isChosenSelected,
+        searchQuery,
+        subjectFilter
     ) { isChosenSelected, query, subjectFilter ->
         Triple(isChosenSelected, query, subjectFilter)
     }.flatMapLatest { (isChosenSelected, query, subjectFilter) ->
@@ -132,6 +180,7 @@ class TermsListViewModel(
                     if (elements.size == 1 && elements[0].isNotBlank()) {
                         val subject = Subject(0, elements[0].trim())
                         subjectId = subjectsInteractor.insertSubject(subject)
+                        println("mmm addNewTerms subjectId=$subjectId")
                     } else if (elements.size == 3) {
                         val term = Term(0,
                                         elements[0].trim(),
@@ -147,6 +196,8 @@ class TermsListViewModel(
             }
         }
     }
+
+
 
     sealed class TermEvent {
         data class ShowMessage(val message: String) : TermEvent()

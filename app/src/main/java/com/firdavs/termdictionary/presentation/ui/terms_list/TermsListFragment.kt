@@ -16,11 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
+import com.firdavs.termdictionary.data.model.TermFirestore
+import com.firdavs.termdictionary.data.model.TermFirestore.Companion.toTermFirestore
 import com.firdavs.termdictionary.data.model.UserData
 import com.firdavs.termdictionary.data.model.toUI
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.FirestoreTermsListViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +39,8 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
     private val viewModel: TermsListViewModel by viewModel()
     private val firestoreViewModel: FirestoreTermsListViewModel by viewModel()
+
+    var user: UserData? = null
 
     private val termsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
@@ -64,10 +71,10 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         binding.termsListRecyclerView.adapter = termsAdapter
 
-        firestoreViewModel._terms.observe(viewLifecycleOwner) {
+        /*firestoreViewModel._terms.observe(viewLifecycleOwner) {
             termsAdapter.items = it.toUI()
-        }
-        firestoreViewModel.getTermIds()
+        }*/
+        //firestoreViewModel.getTermIds()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.termEvent.collect { event ->
@@ -85,7 +92,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 }
             }
         }
-        var user = arguments?.get("user") as UserData?
+        user = arguments?.get("user") as UserData?
 
         val major = arguments?.getString("major")
         val subject = arguments?.getString("subject")
@@ -95,17 +102,15 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             viewModel.subjectFilter.value = subject
         }
 
-        println("mmm TermsListFragment $user")
-
         viewModel.terms.observe(viewLifecycleOwner) {
             if (subject.isNullOrEmpty()) {
-                //termsAdapter.items = it.toList()
+                termsAdapter.items = it.toList()
             }
         }
 
         if (!subject.isNullOrEmpty()) {
             viewModel.termsOfSubject.observe(viewLifecycleOwner) {
-                //termsAdapter.items = it
+                termsAdapter.items = it
             }
         }
 
@@ -130,7 +135,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 }
                 R.id.add_term -> {
                     val action =
-                        TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment()
+                        TermsListFragmentDirections.actionTermsListFragmentToAddTermFragment(user)
                     findNavController().navigate(action)
                 }
                 R.id.extract_term -> Toast
@@ -174,5 +179,17 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        FirebaseFirestore.getInstance().collection("Terms").addSnapshotListener(requireActivity()) { value: QuerySnapshot?, error: FirebaseFirestoreException? ->
+            if (error != null) return@addSnapshotListener
+
+            if (value != null) {
+                val newTerms: List<TermFirestore> = value.documents.mapNotNull { it.toTermFirestore() }
+                viewModel.addTermsFromFirestore(newTerms)
+            }
+        }
     }
 }
