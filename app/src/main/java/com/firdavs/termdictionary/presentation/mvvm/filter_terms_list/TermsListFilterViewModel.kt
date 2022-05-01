@@ -24,7 +24,7 @@ class TermsListFilterViewModel(
             termsInteractor.insertTermSubjectConnection(termId, subjectId)
 
             if (userLogin != null) {
-                FirebaseService.addTerm(term.toFirestore(subject))
+                FirebaseService.addTerm(term.toFirestore(listOf(subject)))
             }
         }
     }

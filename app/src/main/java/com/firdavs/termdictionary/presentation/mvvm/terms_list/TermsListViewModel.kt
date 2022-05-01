@@ -1,13 +1,11 @@
 package com.firdavs.termdictionary.presentation.mvvm.terms_list
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.firdavs.termdictionary.data.firestore.FirebaseService
 import com.firdavs.termdictionary.data.model.TermFirestore
-import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import com.firdavs.termdictionary.domain.model.Subject
 import com.firdavs.termdictionary.domain.model.Term
 import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
@@ -16,7 +14,6 @@ import com.firdavs.termdictionary.presentation.model.TermUI
 import com.firdavs.termdictionary.presentation.model.toDomain
 import com.firdavs.termdictionary.presentation.model.toFirestore
 import com.firdavs.termdictionary.presentation.model.toUI
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,27 +26,6 @@ class TermsListViewModel(
 
     init {
         //addTermsToFirestore()
-    }
-
-    fun addTermsFromFirestore(newTerms: List<TermFirestore>) {
-        viewModelScope.launch {
-            newTerms.forEach { termFirestore ->
-                var subjectId = subjectsInteractor.insertSubject(Subject(0, termFirestore.subject))
-                if (subjectId == (-1).toLong()) {
-                    subjectId = subjectsInteractor.getSubjectId(termFirestore.subject)
-                }
-                var termId = termsInteractor.insertTerm(Term(0,
-                                                             termFirestore.name,
-                                                             termFirestore.definition,
-                                                             termFirestore.translation,
-                                                             "",
-                                                             false))
-                if (termId == (-1).toLong()) {
-                    termId = termsInteractor.getTermId(termFirestore.name, termFirestore.definition)
-                }
-                termsInteractor.insertTermSubjectConnection(termId, subjectId)
-            }
-        }
     }
 
     private fun addTermsToFirestore() {
@@ -66,15 +42,42 @@ class TermsListViewModel(
         for (i in 0 until 46) {
             val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false)
             viewModelScope.launch {
-                FirebaseService.addTerm(newTerm.toFirestore("Введение в специальность"))
+                FirebaseService.addTerm(newTerm.toFirestore(listOf("Введение в специальность",
+                                                                   "Проектирование человеко-машинного взаимодействия")))
             }
-            val term = TermDbEntity(0, terms[i], definitions[i], translations[i], "", false)
-
         }
         for (i in 46 until 92) {
             val newTerm = TermUI(0, terms[i], definitions[i], translations[i], "", false)
             viewModelScope.launch {
-                FirebaseService.addTerm(newTerm.toFirestore("Проектирование человеко-машинного взаимодействия"))
+                FirebaseService.addTerm(newTerm.toFirestore(listOf("Проектирование человеко-машинного взаимодействия")))
+            }
+        }
+    }
+
+    fun addTermsFromFirestore(newTerms: List<TermFirestore>) {
+        viewModelScope.launch {
+            newTerms.forEach { termFirestore ->
+                val subjectIds = mutableListOf<Long>()
+                termFirestore.subjects.forEach { subject ->
+                    var subjectId = subjectsInteractor.insertSubject(Subject(0, subject))
+                    if (subjectId == (-1).toLong()) {
+                        subjectId = subjectsInteractor.getSubjectId(subject)
+                    }
+                    subjectIds.add(subjectId)
+                }
+
+                var termId = termsInteractor.insertTerm(Term(0,
+                                                             termFirestore.name,
+                                                             termFirestore.definition,
+                                                             termFirestore.translation,
+                                                             "",
+                                                             false))
+                if (termId == (-1).toLong()) {
+                    termId = termsInteractor.getTermId(termFirestore.name, termFirestore.definition)
+                }
+                subjectIds.forEach { subjectId ->
+                    termsInteractor.insertTermSubjectConnection(termId, subjectId)
+                }
             }
         }
     }
@@ -125,32 +128,44 @@ class TermsListViewModel(
         }
     }
 
-    fun addNewTerms(newTerms: List<String>?) {
+    fun importNewTerms(userLogin: String?, newTerms: List<String>?) {
         viewModelScope.launch {
             if (newTerms == null) {
                 termsEventChannel.send(TermEvent.ShowMessage("Произошла ошибка"))
             } else {
+                var subjects = listOf<String>()
+                val subjectIds = mutableListOf<Long>()
                 var subjectId: Long = 0
                 newTerms.forEach {
-                    val elements = it.split(";")
-                    if (elements.size == 1 && elements[0].isNotBlank()) {
-                        val subject = Subject(0, elements[0].trim())
-                        subjectId = subjectsInteractor.insertSubject(subject)
-                        if (subjectId == (-1).toLong()) {
-                            subjectId = subjectsInteractor.getSubjectId(subject.name)
+                    if (it.contains("|")/* elements.size == 1 && elements[0].isNotBlank()*/) {
+                        subjectIds.clear()
+                        subjects = it.split("|").filter { it.isNotBlank() }.map { it.trim() }
+                        subjects.forEach { subject ->
+                            subjectId = subjectsInteractor.insertSubject(Subject(0, subject))
+                            if (subjectId == (-1).toLong()) {
+                                subjectId = subjectsInteractor.getSubjectId(subject)
+                            }
+                            subjectIds.add(subjectId)
                         }
-                    } else if (elements.size == 3) {
-                        val term = Term(0,
+                    } else if (it.contains(";")/*elements.size == 3*/) {
+                        val elements = it.split(";")
+                        val term = TermUI(0,
                                         elements[0].trim(),
                                         elements[1].trim(),
                                         elements[2].trim(),
                                         "",
                                         false)
-                        var termId = termsInteractor.insertTerm(term)
+                        var termId = termsInteractor.insertTerm(term.toDomain())
                         if (termId == (-1).toLong()) {
                             termId = termsInteractor.getTermId(term.name, term.definition)
                         }
-                        termsInteractor.insertTermSubjectConnection(termId, subjectId)
+                        subjectIds.forEach { subjectId ->
+                            termsInteractor.insertTermSubjectConnection(termId, subjectId)
+                        }
+
+                        if (userLogin != null) {
+                            FirebaseService.addTerm(term.toFirestore(subjects))
+                        }
                     }
                 }
                 termsEventChannel.send(TermEvent.ShowMessage("Новые термины были импортированы"))

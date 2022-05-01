@@ -51,9 +51,13 @@ abstract class AppDatabase : RoomDatabase() {
         private suspend fun addTermsFromFirestoreToRoom() {
             val termsFromFirestore = FirebaseService.getTerms()
             termsFromFirestore.forEach { termFirestore ->
-                var subjectId = appDatabase.getSubjectsDao().insertSubject(SubjectDBEntity(0, termFirestore.subject))
-                if (subjectId == (-1).toLong()) {
-                    subjectId = appDatabase.getSubjectsDao().getSubjectId(termFirestore.subject)
+                val subjectIds = mutableListOf<Long>()
+                termFirestore.subjects.forEach { subject ->
+                    var subjectId = appDatabase.getSubjectsDao().insertSubject(SubjectDBEntity(0, subject))
+                    if (subjectId == (-1).toLong()) {
+                        subjectId = appDatabase.getSubjectsDao().getSubjectId(subject)
+                    }
+                    subjectIds.add(subjectId)
                 }
                 //println("mmm addTermsFromFirestoreToRoom subjectId=$subjectId")
                 var termId = appDatabase.getTermsDao().insertTerm(TermDbEntity(0,
@@ -65,7 +69,9 @@ abstract class AppDatabase : RoomDatabase() {
                 if (termId == (-1).toLong()) {
                     termId = appDatabase.getTermsDao().getTermId(termFirestore.name, termFirestore.definition)
                 }
-                appDatabase.getTermsDao().insertTermSubject(TermSubjectDbEntity(termId, subjectId))
+                subjectIds.forEach { subjectId ->
+                    appDatabase.getTermsDao().insertTermSubject(TermSubjectDbEntity(termId, subjectId))
+                }
             }
         }
 

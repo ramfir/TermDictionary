@@ -12,7 +12,7 @@ data class TermFirestore(
         val name: String,
         val definition: String,
         val translation: String,
-        val subject: String
+        val subjects: List<String>
 ): Parcelable {
 
     companion object {
@@ -21,7 +21,7 @@ data class TermFirestore(
                 val name = getString("name")!!
                 val definition = getString("definition")!!
                 val translation = getString("translation")!!
-                val subject = getString("subject")!!
+                val subject = get("subjects")!! as List<String>
                 TermFirestore(name, definition, translation, subject)
             } catch (e: Exception) {
                 Log.e("MyApp", "Error converting term", e)

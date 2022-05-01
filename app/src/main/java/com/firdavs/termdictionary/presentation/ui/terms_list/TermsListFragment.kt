@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.data.model.TermFirestore
 import com.firdavs.termdictionary.data.model.TermFirestore.Companion.toTermFirestore
-import com.firdavs.termdictionary.data.model.UserData
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -55,7 +54,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                         .openInputStream(it)
                         ?.bufferedReader()
                         ?.readLines()
-                viewModel.addNewTerms(newTerms)
+                viewModel.importNewTerms(userLogin, newTerms)
                 return@registerForActivityResult
             }
             Toast.makeText(requireContext(), "Файл не выбран", Toast.LENGTH_LONG).show()

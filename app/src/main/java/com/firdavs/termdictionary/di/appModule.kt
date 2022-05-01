@@ -1,7 +1,9 @@
 package com.firdavs.termdictionary.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.data.repository.SubjectsRepositoryImpl
 import com.firdavs.termdictionary.data.repository.TermsRepositoryImpl
 import com.firdavs.termdictionary.data.room.AppDatabase

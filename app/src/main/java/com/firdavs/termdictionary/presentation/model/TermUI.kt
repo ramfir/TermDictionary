@@ -21,4 +21,4 @@ fun List<Term>.toUI() = map { it.toUI() }
 fun TermUI.toDomain() = Term(id, name, definition, translation, notes, isChosen)
 fun List<TermUI>.toDomain() = map { it.toDomain() }
 
-fun TermUI.toFirestore(subject: String) = TermFirestore(name, definition, translation, subject)
+fun TermUI.toFirestore(subjects: List<String>) = TermFirestore(name, definition, translation, subjects)
