@@ -17,13 +17,13 @@ class TermsListFilterViewModel(
         private val subjectsInteractor: SubjectsInteractor,
 ) : ViewModel() {
 
-    fun insertTerm(userLogin: String?, subject: String, term: TermUI) {
+    fun insertTerm(userLogin: String, subject: String, term: TermUI) {
         viewModelScope.launch {
             val termId: Long = termsInteractor.insertTerm(term.toDomain())
             val subjectId: Long = subjectsInteractor.getSubjectId(subject)
             termsInteractor.insertTermSubjectConnection(termId, subjectId)
 
-            if (userLogin != null) {
+            if (userLogin.isNotEmpty()) {
                 FirebaseService.addTerm(term.toFirestore(listOf(subject)))
             }
         }

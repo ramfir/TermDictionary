@@ -25,5 +25,9 @@
         android:icon="@drawable/ic_contact"
         android:id="@+id/contact"
         android:title="@string/contact" />
+    <item
+        android:icon="@drawable/ic_logout"
+        android:id="@+id/logout"
+        android:title="@string/logout" />
 
 </menu>

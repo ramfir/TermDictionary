@@ -128,7 +128,7 @@ class TermsListViewModel(
         }
     }
 
-    fun importNewTerms(userLogin: String?, newTerms: List<String>?) {
+    fun importNewTerms(userLogin: String, newTerms: List<String>?) {
         viewModelScope.launch {
             if (newTerms == null) {
                 termsEventChannel.send(TermEvent.ShowMessage("Произошла ошибка"))
@@ -163,7 +163,7 @@ class TermsListViewModel(
                             termsInteractor.insertTermSubjectConnection(termId, subjectId)
                         }
 
-                        if (userLogin != null) {
+                        if (userLogin.isNotEmpty()) {
                             FirebaseService.addTerm(term.toFirestore(subjects))
                         }
                     }

@@ -2,6 +2,8 @@ package com.firdavs.termdictionary.presentation.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -28,8 +30,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
 
-
         binding.buttonLoginAsStudent.setOnClickListener {
+            saveLogin("")
             Toast
                 .makeText(requireContext(), "Вы вошли как студент", Toast.LENGTH_LONG)
                 .show()
@@ -59,13 +61,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     }
                     is LoginViewModel.SignUpEvent.NavigateToTermsListFragment -> {
                         val login = binding.textInputEditTextLogin.text.toString()
-                        val sharedPref =
-                            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
-                                                                   Context.MODE_PRIVATE)
-                        with(sharedPref.edit()) {
-                            putString(getString(R.string.saved_login_key), login)
-                            apply()
-                        }
+                        saveLogin(login)
                         Toast
                             .makeText(requireContext(), "Вы вошли как $login", Toast.LENGTH_LONG)
                             .show()
@@ -74,6 +70,32 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     }
                 }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Handler(Looper.getMainLooper()).apply { post { moveToTermsListFragment() } }
+    }
+
+    private fun moveToTermsListFragment() {
+        val sharedPref =
+            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                   Context.MODE_PRIVATE)
+        val userLogin = sharedPref.getString(getString(R.string.saved_login_key), null)
+        if (userLogin != null) {
+            val action = LoginFragmentDirections.actionLoginFragmentToTermsListFragment(null)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun saveLogin(login: String) {
+        val sharedPref =
+            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                   Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString(getString(R.string.saved_login_key), login)
+            apply()
         }
     }
 

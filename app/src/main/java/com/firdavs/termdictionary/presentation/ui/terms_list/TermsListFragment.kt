@@ -37,7 +37,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
     private val viewModel: TermsListViewModel by viewModel()
 
-    var userLogin: String? = null
+    var userLogin = ""
 
     private val termsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
@@ -74,7 +74,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         val sharedPref =
             requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
                                                    Context.MODE_PRIVATE)
-        userLogin = sharedPref.getString(getString(R.string.saved_login_key), null)
+        userLogin = sharedPref.getString(getString(R.string.saved_login_key), "") ?: ""
         val subject = arguments?.getString("subject")
         val isChosenSelected = arguments?.getBoolean("isChosenSelected") ?: false
         viewModel.isChosenSelected.value = isChosenSelected
@@ -145,6 +145,14 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 R.id.contact -> Toast
                     .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
                     .show()
+                R.id.logout -> {
+                    val sharedPref =
+                        requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                               Context.MODE_PRIVATE)
+                    sharedPref.edit().remove(getString(R.string.saved_login_key)).apply()
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToLoginFragment()
+                    findNavController().navigate(action)
+                }
             }
             true
         }

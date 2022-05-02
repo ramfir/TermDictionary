@@ -24,7 +24,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
 
     private val viewModel: TermsListFilterViewModel by viewModel()
 
-    private var userLogin: String? = null
+    private var userLogin = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +33,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
         val sharedPref =
             requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
                                                    Context.MODE_PRIVATE)
-        userLogin = sharedPref.getString(getString(R.string.saved_login_key), null)
+        userLogin = sharedPref.getString(getString(R.string.saved_login_key), "") ?: ""
 
         setupViews()
     }
@@ -83,7 +83,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
     }
 
     private fun addTerm(
-        userLogin: String?,
+        userLogin: String,
         name: String,
         translation: String,
         subject: String,
