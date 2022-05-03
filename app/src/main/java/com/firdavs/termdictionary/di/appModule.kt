@@ -12,6 +12,7 @@ import com.firdavs.termdictionary.domain.repository.TermsRepository
 import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.mvvm.filter_terms_list.TermsListFilterViewModel
+import com.firdavs.termdictionary.presentation.mvvm.import_terms.ImportTermsViewModel
 import com.firdavs.termdictionary.presentation.mvvm.login.LoginViewModel
 import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
@@ -34,6 +35,7 @@ val appModule = module {
     viewModel { TestFragmentViewModel(get()) }
     viewModel { TermsListFilterViewModel(get(), get()) }
     viewModel { LoginViewModel() }
+    viewModel { ImportTermsViewModel(get(), get()) }
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {

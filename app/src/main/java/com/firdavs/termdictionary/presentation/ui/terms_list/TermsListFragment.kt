@@ -1,15 +1,12 @@
 package com.firdavs.termdictionary.presentation.ui.terms_list
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -43,22 +40,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
                                          getTermsAdapterDelegate { term, changeChosenProperty ->
                                              viewModel.onTermClicked(term, changeChosenProperty)
-                                         })
-    }
-
-    private val getContent: ActivityResultLauncher<String> =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
-            fileUri?.let {
-                val newTerms =
-                    requireActivity().contentResolver
-                        .openInputStream(it)
-                        ?.bufferedReader()
-                        ?.readLines()
-                viewModel.importNewTerms(userLogin, newTerms)
-                return@registerForActivityResult
-            }
-            Toast.makeText(requireContext(), "Файл не выбран", Toast.LENGTH_LONG).show()
-        }
+                                         })}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -71,9 +53,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         binding.termsListRecyclerView.adapter = termsAdapter
 
-        val sharedPref =
-            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
-                                                   Context.MODE_PRIVATE)
+        val sharedPref = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         userLogin = sharedPref.getString(getString(R.string.saved_login_key), "") ?: ""
         val subject = arguments?.getString("subject")
         val isChosenSelected = arguments?.getBoolean("isChosenSelected") ?: false
@@ -103,9 +83,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                                 event.term,
                                 event.term.name)
                         findNavController().navigate(action)
-                    }
-                    is TermsListViewModel.TermEvent.ShowMessage -> {
-                        Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -140,7 +117,8 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                     .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
                     .show()
                 R.id.import_terms -> {
-                    getContent.launch("text/*")
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToImportTermsFragment()
+                    findNavController().navigate(action)
                 }
                 R.id.contact -> Toast
                     .makeText(requireContext(), R.string.about_app, Toast.LENGTH_SHORT)

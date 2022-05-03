@@ -128,53 +128,7 @@ class TermsListViewModel(
         }
     }
 
-    fun importNewTerms(userLogin: String, newTerms: List<String>?) {
-        viewModelScope.launch {
-            if (newTerms == null) {
-                termsEventChannel.send(TermEvent.ShowMessage("Произошла ошибка"))
-            } else {
-                var subjects = listOf<String>()
-                val subjectIds = mutableListOf<Long>()
-                var subjectId: Long = 0
-                newTerms.forEach {
-                    if (it.contains("|")/* elements.size == 1 && elements[0].isNotBlank()*/) {
-                        subjectIds.clear()
-                        subjects = it.split("|").filter { it.isNotBlank() }.map { it.trim() }
-                        subjects.forEach { subject ->
-                            subjectId = subjectsInteractor.insertSubject(Subject(0, subject))
-                            if (subjectId == (-1).toLong()) {
-                                subjectId = subjectsInteractor.getSubjectId(subject)
-                            }
-                            subjectIds.add(subjectId)
-                        }
-                    } else if (it.contains(";")/*elements.size == 3*/) {
-                        val elements = it.split(";")
-                        val term = TermUI(0,
-                                        elements[0].trim(),
-                                        elements[1].trim(),
-                                        elements[2].trim(),
-                                        "",
-                                        false)
-                        var termId = termsInteractor.insertTerm(term.toDomain())
-                        if (termId == (-1).toLong()) {
-                            termId = termsInteractor.getTermId(term.name, term.definition)
-                        }
-                        subjectIds.forEach { subjectId ->
-                            termsInteractor.insertTermSubjectConnection(termId, subjectId)
-                        }
-
-                        if (userLogin.isNotEmpty()) {
-                            FirebaseService.addTerm(term.toFirestore(subjects))
-                        }
-                    }
-                }
-                termsEventChannel.send(TermEvent.ShowMessage("Новые термины были импортированы"))
-            }
-        }
-    }
-
     sealed class TermEvent {
-        data class ShowMessage(val message: String) : TermEvent()
         data class NavigateToTermDetailsFragment(val term: TermUI) : TermEvent()
     }
 }

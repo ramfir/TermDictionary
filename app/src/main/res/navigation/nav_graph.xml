@@ -39,6 +39,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/termsListFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_termsListFragment_to_importTermsFragment"
+            app:destination="@id/importTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/termDetailFragment"
@@ -82,6 +85,17 @@
             android:id="@+id/action_loginFragment_to_termsListFragment"
             app:destination="@id/termsListFragment"
             app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/importTermsFragment"
+        android:name="com.firdavs.termdictionary.presentation.ui.import_terms.ImportTermsFragment"
+        android:label="@string/import_terms"
+        tools:layout="@layout/fragment_import_terms" >
+        <action
+            android:id="@+id/action_importTermsFragment_to_termsListFragment"
+            app:destination="@id/termsListFragment"
+            app:popUpTo="@id/termsListFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
