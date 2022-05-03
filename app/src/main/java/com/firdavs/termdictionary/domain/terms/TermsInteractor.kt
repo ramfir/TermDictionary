@@ -24,4 +24,8 @@ class TermsInteractor(private val repository: TermsRepository) {
     suspend fun insertTermSubjectConnection(termId: Long, subjectId: Long) {
         repository.insertTermSubjectConnection(termId, subjectId)
     }
+
+    suspend fun getTermId(name: String, definition: String): Long {
+        return repository.getTermId(name, definition)
+    }
 }

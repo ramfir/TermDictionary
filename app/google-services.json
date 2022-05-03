@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "508853844620",
+    "project_id": "termdictionary-4ac40",
+    "storage_bucket": "termdictionary-4ac40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508853844620:android:7f0cc2a8a3a89e1f5099a9",
+        "android_client_info": {
+          "package_name": "com.firdavs.termdictionary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508853844620-p2ig4vnttsaogttsr2clpo0hlt2e5lel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ22t9F5c-QUp3WnbTpspmx3cooInjDJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508853844620-p2ig4vnttsaogttsr2clpo0hlt2e5lel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

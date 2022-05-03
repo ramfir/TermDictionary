@@ -1,8 +1,8 @@
 package com.firdavs.termdictionary.presentation.ui.terms_list
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -13,18 +13,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firdavs.termdictionary.R
+import com.firdavs.termdictionary.data.model.TermFirestore
+import com.firdavs.termdictionary.data.model.TermFirestore.Companion.toTermFirestore
 import com.firdavs.termdictionary.databinding.FragmentTermsListBinding
-import com.firdavs.termdictionary.presentation.model.toUI
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 
 class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
@@ -34,6 +36,8 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
     private var toggle: ActionBarDrawerToggle? = null
 
     private val viewModel: TermsListViewModel by viewModel()
+
+    var userLogin = ""
 
     private val termsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
@@ -46,8 +50,11 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
         registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
             fileUri?.let {
                 val newTerms =
-                    requireActivity().contentResolver.openInputStream(it)?.bufferedReader()?.readLines()
-                viewModel.addNewTerms(newTerms)
+                    requireActivity().contentResolver
+                        .openInputStream(it)
+                        ?.bufferedReader()
+                        ?.readLines()
+                viewModel.importNewTerms(userLogin, newTerms)
                 return@registerForActivityResult
             }
             Toast.makeText(requireContext(), "Файл не выбран", Toast.LENGTH_LONG).show()
@@ -64,24 +71,10 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
         binding.termsListRecyclerView.adapter = termsAdapter
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.termEvent.collect { event ->
-                when (event) {
-                    is TermsListViewModel.TermEvent.NavigateToTermDetailsFragment -> {
-                        val action =
-                            TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(
-                                    event.term,
-                                    event.term.name)
-                        findNavController().navigate(action)
-                    }
-                    is TermsListViewModel.TermEvent.ShowMessage -> {
-                        Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
-
-        val major = arguments?.getString("major")
+        val sharedPref =
+            requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                   Context.MODE_PRIVATE)
+        userLogin = sharedPref.getString(getString(R.string.saved_login_key), "") ?: ""
         val subject = arguments?.getString("subject")
         val isChosenSelected = arguments?.getBoolean("isChosenSelected") ?: false
         viewModel.isChosenSelected.value = isChosenSelected
@@ -101,17 +94,32 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.termEvent.collect { event ->
+                when (event) {
+                    is TermsListViewModel.TermEvent.NavigateToTermDetailsFragment -> {
+                        val action =
+                            TermsListFragmentDirections.actionTermsListFragmentToTermDetailFragment(
+                                event.term,
+                                event.term.name)
+                        findNavController().navigate(action)
+                    }
+                    is TermsListViewModel.TermEvent.ShowMessage -> {
+                        Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun initNavigationDrawer() {
-        toggle =
-            ActionBarDrawerToggle(activity,
-                                  binding.drawerLayout,
-                                  R.string.open,
-                                  R.string.close).also {
-                binding.drawerLayout.addDrawerListener(it)
-                it.syncState()
-            }
+        toggle = ActionBarDrawerToggle(activity,
+                                       binding.drawerLayout,
+                                       R.string.open,
+                                       R.string.close).also {
+            binding.drawerLayout.addDrawerListener(it)
+            it.syncState()
+        }
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true) // for converting hamburger to back arrow
 
         binding.navView.setNavigationItemSelectedListener {
@@ -131,10 +139,20 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 R.id.settings -> Toast
                     .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
                     .show()
-                R.id.import_terms -> { getContent.launch("text/*") }
+                R.id.import_terms -> {
+                    getContent.launch("text/*")
+                }
                 R.id.contact -> Toast
                     .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
                     .show()
+                R.id.logout -> {
+                    val sharedPref =
+                        requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
+                                                               Context.MODE_PRIVATE)
+                    sharedPref.edit().remove(getString(R.string.saved_login_key)).apply()
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToLoginFragment()
+                    findNavController().navigate(action)
+                }
             }
             true
         }
@@ -166,5 +184,21 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        FirebaseFirestore
+            .getInstance()
+            .collection("Terms")
+            .addSnapshotListener(requireActivity()) { value: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                if (error != null) return@addSnapshotListener
+
+                if (value != null) {
+                    val newTerms: List<TermFirestore> =
+                        value.documents.mapNotNull { it.toTermFirestore() }
+                    viewModel.addTermsFromFirestore(newTerms)
+                }
+            }
     }
 }

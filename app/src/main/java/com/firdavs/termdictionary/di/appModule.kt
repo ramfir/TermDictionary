@@ -1,7 +1,9 @@
 package com.firdavs.termdictionary.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.firdavs.termdictionary.R
 import com.firdavs.termdictionary.data.repository.SubjectsRepositoryImpl
 import com.firdavs.termdictionary.data.repository.TermsRepositoryImpl
 import com.firdavs.termdictionary.data.room.AppDatabase
@@ -10,6 +12,7 @@ import com.firdavs.termdictionary.domain.repository.TermsRepository
 import com.firdavs.termdictionary.domain.subjects.SubjectsInteractor
 import com.firdavs.termdictionary.domain.terms.TermsInteractor
 import com.firdavs.termdictionary.presentation.mvvm.filter_terms_list.TermsListFilterViewModel
+import com.firdavs.termdictionary.presentation.mvvm.login.LoginViewModel
 import com.firdavs.termdictionary.presentation.mvvm.term_details.TermDetailsViewModel
 import com.firdavs.termdictionary.presentation.mvvm.terms_list.TermsListViewModel
 import com.firdavs.termdictionary.presentation.mvvm.test.TestFragmentViewModel
@@ -26,10 +29,11 @@ val appModule = module {
     single<CoroutineScope> { CoroutineScope(SupervisorJob()) }
     single<TermsInteractor> { TermsInteractor(get()) }
     single<SubjectsInteractor> { SubjectsInteractor(get()) }
-    viewModel { TermsListViewModel(get(), get()) }
+    viewModel { TermsListViewModel(get(), get(), androidContext()) }
     viewModel { TermDetailsViewModel(get()) }
     viewModel { TestFragmentViewModel(get()) }
     viewModel { TermsListFilterViewModel(get(), get()) }
+    viewModel { LoginViewModel() }
 }
 
 fun provideTermsRepositoryImpl(database: AppDatabase): TermsRepositoryImpl {

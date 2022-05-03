@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TermDictionary</string>
     <string name="terms">Terms</string>
+    <string name="login">Логин</string>
+    <string name="sign_up">Регистрация</string>
     <string name="term_detail">Term Details</string>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
@@ -11,5 +13,8 @@
     <string name="settings">Настройки</string>
     <string name="import_terms">Импорт новых терминов</string>
     <string name="contact">Обратная связь</string>
+    <string name="logout">Выйти</string>
     <string name="question">Утверждение, которое принимается без доказательства и является исходным для доказательства других утверждений называется:</string>
+    <string name="preference_file_key">user</string>
+    <string name="saved_login_key">login</string>
 </resources>

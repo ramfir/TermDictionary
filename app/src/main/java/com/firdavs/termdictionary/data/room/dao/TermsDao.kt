@@ -33,4 +33,7 @@ interface TermsDao {
     @Transaction
     @Query("SELECT * from subjects WHERE name = :subjectName")
     fun getTermsOfSubject(subjectName: String): Flow<TermsOfSubjectDb>
+
+    @Query("SELECT id FROM terms WHERE name = :name AND definition = :definition")
+    suspend fun getTermId(name: String, definition: String): Long
 }

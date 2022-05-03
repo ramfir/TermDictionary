@@ -3,14 +3,18 @@ package com.firdavs.termdictionary.data.room
 import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
+import androidx.lifecycle.viewModelScope
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.firdavs.termdictionary.data.firestore.FirebaseService
 import com.firdavs.termdictionary.data.room.dao.SubjectsDao
 import com.firdavs.termdictionary.data.room.dao.TermsDao
 import com.firdavs.termdictionary.data.room.entity.SubjectDBEntity
 import com.firdavs.termdictionary.data.room.entity.TermDbEntity
 import com.firdavs.termdictionary.data.room.entity.TermSubjectDbEntity
+import com.firdavs.termdictionary.domain.model.Subject
+import com.firdavs.termdictionary.domain.model.Term
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
@@ -23,8 +27,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getSubjectsDao(): SubjectsDao
 
     class Callback(
-            private val context: Context,
-            private val applicationScope: CoroutineScope,
+        private val context: Context,
+        private val applicationScope: CoroutineScope,
     ) : RoomDatabase.Callback() {
 
         val appDatabase: AppDatabase by inject(AppDatabase::class.java)
@@ -34,31 +38,59 @@ abstract class AppDatabase : RoomDatabase() {
 
             applicationScope.launch {
                 try {
-                    addTerms(appDatabase.getTermsDao())
-                    addSubjects(appDatabase.getSubjectsDao())
-                    addTermSubject(appDatabase.getTermsDao())
-                } catch(e: SQLiteConstraintException) {
+                    addTermsFromFirestoreToRoom()
+                    //addTerms(appDatabase.getTermsDao())
+                    //addSubjects(appDatabase.getSubjectsDao())
+                    //addTermSubject(appDatabase.getTermsDao())
+                } catch (e: SQLiteConstraintException) {
                     Log.d("MyApp", "${e.message}")
                 }
             }
         }
 
+        private suspend fun addTermsFromFirestoreToRoom() {
+            val termsFromFirestore = FirebaseService.getTerms()
+            termsFromFirestore.forEach { termFirestore ->
+                val subjectIds = mutableListOf<Long>()
+                termFirestore.subjects.forEach { subject ->
+                    var subjectId = appDatabase.getSubjectsDao().insertSubject(SubjectDBEntity(0, subject))
+                    if (subjectId == (-1).toLong()) {
+                        subjectId = appDatabase.getSubjectsDao().getSubjectId(subject)
+                    }
+                    subjectIds.add(subjectId)
+                }
+                //println("mmm addTermsFromFirestoreToRoom subjectId=$subjectId")
+                var termId = appDatabase.getTermsDao().insertTerm(TermDbEntity(0,
+                                                                               termFirestore.name,
+                                                                               termFirestore.definition,
+                                                                               termFirestore.translation,
+                                                                               "",
+                                                                               false))
+                if (termId == (-1).toLong()) {
+                    termId = appDatabase.getTermsDao().getTermId(termFirestore.name, termFirestore.definition)
+                }
+                subjectIds.forEach { subjectId ->
+                    appDatabase.getTermsDao().insertTermSubject(TermSubjectDbEntity(termId, subjectId))
+                }
+            }
+        }
+
         private suspend fun addTermSubject(dao: TermsDao) {
-            for (i in 1 .. 46) {
+            for (i in 1..46) {
                 try {
                     val termSubject = TermSubjectDbEntity(i.toLong(), 1)
                     dao.insertTermSubject(termSubject)
-                } catch(e: SQLiteConstraintException) {
+                } catch (e: SQLiteConstraintException) {
                     Log.d("MyApp", "$i --> ${e.message}")
                 }
             }
-            for (i in 47 .. 92) {
+            for (i in 47..92) {
                 try {
                     val termSubject1 = TermSubjectDbEntity(i.toLong(), 1)
                     val termSubject2 = TermSubjectDbEntity(i.toLong(), 2)
                     dao.insertTermSubject(termSubject1)
                     dao.insertTermSubject(termSubject2)
-                } catch(e: SQLiteConstraintException) {
+                } catch (e: SQLiteConstraintException) {
                     Log.d("MyApp", "$i --> ${e.message}")
                 }
 
