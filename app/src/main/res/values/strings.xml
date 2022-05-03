@@ -12,7 +12,7 @@
     <string name="extract_terms">Выделить термины из текста</string>
     <string name="settings">Настройки</string>
     <string name="import_terms">Импорт новых терминов</string>
-    <string name="contact">Обратная связь</string>
+    <string name="about_app">О приложении</string>
     <string name="logout">Выйти</string>
     <string name="question">Утверждение, которое принимается без доказательства и является исходным для доказательства других утверждений называется:</string>
     <string name="preference_file_key">user</string>

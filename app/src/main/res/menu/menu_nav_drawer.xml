@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/test"
+            android:icon="@drawable/img_pen"
+            android:title="@string/test" />
+        <item
+            android:id="@+id/add_term"
+            android:icon="@drawable/ic_add"
+            android:title="@string/add_term" />
+        <item
+            android:id="@+id/extract_term"
+            android:icon="@drawable/ic_extract"
+            android:title="@string/extract_terms" />
+        <item
+            android:id="@+id/import_terms"
+            android:icon="@drawable/ic_import"
+            android:title="@string/import_terms" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+    </group>
 
-    <item
-        android:icon="@drawable/img_pen"
-        android:id="@+id/test"
-        android:title="@string/test" />
-    <item
-        android:icon="@drawable/ic_add"
-        android:id="@+id/add_term"
-        android:title="@string/add_term" />
-    <item
-        android:icon="@drawable/ic_extract"
-        android:id="@+id/extract_term"
-        android:title="@string/extract_terms" />
-    <item
-        android:icon="@drawable/ic_settings"
-        android:id="@+id/settings"
-        android:title="@string/settings" />
-    <item
-        android:icon="@drawable/ic_import"
-        android:id="@+id/import_terms"
-        android:title="@string/import_terms" />
-    <item
-        android:icon="@drawable/ic_contact"
-        android:id="@+id/contact"
-        android:title="@string/contact" />
-    <item
-        android:icon="@drawable/ic_logout"
-        android:id="@+id/logout"
-        android:title="@string/logout" />
-
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/ic_contact"
+            android:title="@string/about_app" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
+    </group>
 </menu>

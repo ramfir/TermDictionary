@@ -37,7 +37,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
 
     private val viewModel: TermsListViewModel by viewModel()
 
-    var userLogin = ""
+    private var userLogin = ""
 
     private val termsAdapter by lazy {
         AsyncListDifferDelegationAdapter(getTermsDiffCallback(),
@@ -143,7 +143,7 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                     getContent.launch("text/*")
                 }
                 R.id.contact -> Toast
-                    .makeText(requireContext(), R.string.contact, Toast.LENGTH_SHORT)
+                    .makeText(requireContext(), R.string.about_app, Toast.LENGTH_SHORT)
                     .show()
                 R.id.logout -> {
                     val sharedPref =
