@@ -16,11 +16,11 @@
         android:textColor="@color/red_500"
         android:textSize="20sp"
         android:gravity="center"
-        android:text="Терминологический\n словарь"/>
+        android:text="@string/app_name"
+        android:layout_marginBottom="16dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"/>
-
+        android:background="#C5C5C5"/>
 
 </LinearLayout>

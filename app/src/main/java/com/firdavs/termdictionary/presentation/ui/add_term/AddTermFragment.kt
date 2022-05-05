@@ -40,10 +40,10 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
 
     private fun setupViews() {
         with(binding) {
-            termName.textInputLayoutTitle.hint = "Введите термин"
-            termTranslation.textInputLayoutTitle.hint = "Введите английский перевод"
-            termDefinition.textInputLayoutTitle.hint = "Введите определение"
-            termNotes.textInputLayoutTitle.hint = "Введите ваши пометки"
+            termName.textInputLayoutTitle.hint = getString(R.string.term)
+            termTranslation.textInputLayoutTitle.hint = getString(R.string.translation)
+            termDefinition.textInputLayoutTitle.hint = getString(R.string.definition)
+            termNotes.textInputLayoutTitle.hint = getString(R.string.your_notes)
 
             termName.textInputEditTextData.addTextChangedListener {
                 termName.textInputLayoutTitle.setErrorMessage(

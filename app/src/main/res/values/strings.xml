@@ -1,9 +1,6 @@
 <resources>
-    <string name="app_name">TermDictionary</string>
-    <string name="terms">Terms</string>
+    <string name="app_name">Словарь терминов</string>
     <string name="login">Логин</string>
-    <string name="sign_up">Регистрация</string>
-    <string name="term_detail">Term Details</string>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
     <string name="chosen">Избранное</string>
@@ -15,8 +12,23 @@
     <string name="about_app">О приложении</string>
     <string name="logout">Выйти</string>
     <string name="question">Утверждение, которое принимается без доказательства и является исходным для доказательства других утверждений называется:</string>
-    <string name="preference_file_key">user</string>
-    <string name="saved_login_key">login</string>
+    <string name="preference_file_key" translatable="false">user</string>
+    <string name="saved_login_key" translatable="false">login</string>
     <string name="import_terms_instruction">Для импорта новых терминов из текстового файла должны быть соблюдены следующие критерии: \n\n \u2022  Файл должен иметь расширение .txt \n \u2022 Файл должен иметь следующий формат: \n\n Дисциплина_1|Дисциплина_2|...|Дисциплина_k|\n Термин_1;Определение_1;Перевод_1 \n Термин_2;Определение_2;Перевод_2 \n ... \n Термин_n;Определение_n;Перевод_n \n\n Пример такого файла: </string>
-    <string name="about_app_data">Данное приложение предназначено для иностранных студентов российских вузов, с помощью которого можно: \n\n \u2022 Получить данные об учебном термине, в том числе определение и перевод на английских язык  \n \u2022 Производить поиск по терминам \n \u2022 Добавлять свои пометки к терминам \n \u2022 Добавлять новые термины \n \u2022 Импортировать новые термины из текстовых файлов \n \u2022 Добавлять термины в избранное \n \u2022 Проходить тесты для заучивания значения терминов \n\n Для связи с автором проекта можете написать на почту firdavs_20111@mail.ru </string>
+    <string name="about_app_data">Данное приложение предназначено для иностранных студентов российских вузов, с помощью которого можно: \n\n \u2022 Получить данные об учебном термине, в том числе определение и перевод на английский язык  \n \u2022 Производить поиск по терминам \n \u2022 Добавлять свои пометки к терминам \n \u2022 Добавлять новые термины \n \u2022 Импортировать новые термины из текстовых файлов \n \u2022 Добавлять термины в избранное \n \u2022 Проходить тесты для заучивания значения терминов \n\n Для связи с автором проекта можете написать на почту firdavs_20111@mail.ru </string>
+    <string name="subject">Дисциплина</string>
+    <string name="apply">Применить</string>
+    <string name="definition">Определение</string>
+    <string name="translation">Перевод на английский</string>
+    <string name="axiom">Аксиома</string>
+    <string name="your_notes">Ваши пометки</string>
+    <string name="password">Пароль</string>
+    <string name="login_as_teacher">Войти как преподаватель</string>
+    <string name="login_as_student">Войти как студент</string>
+    <string name="add">Добавить</string>
+    <string name="term">Термин</string>
+    <string name="upload">Загрузить файл</string>
+    <string name="language">Язык</string>
+    <string name="russian">Русский</string>
+    <string name="english">Английский</string>
 </resources>

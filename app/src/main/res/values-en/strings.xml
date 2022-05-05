@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Term dictionary</string>
+    <string name="login">Login</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="chosen">Favorites</string>
+    <string name="test">Test</string>
+    <string name="add_term">Add term</string>
+    <string name="extract_terms">Term extraction from text</string>
+    <string name="settings">Settings</string>
+    <string name="import_terms">Import new terms</string>
+    <string name="about_app">About app</string>
+    <string name="logout">Log out</string>
+    <string name="question">A statement or proposition which is regarded as being established, accepted, or self-evidently true.</string>
+    <string name="import_terms_instruction">To import new terms from a text file, the following criteria must be met: \n\n \u2022 The file must have an extension.txt \n \u2022 The file must have the following format: \n\n Subject_1|Subject_2|...|Subject_k|\n Term_1;Definition_1;Translation_1\n Term_2;Definition_2;Translation_2 \n ... \n Term_n;Definition_n;Translation_n \n\n An example of such a file:\n</string>
+    <string name="about_app_data">This application is intended for foreign students of Russian universities, with which you can: \n\n \u2022 Get data about the educational term, including the definition and translation into English \n \u2022 Search terms \n \u2022 Add your own notes for terms \n \u2022 Add new terms \n \u2022 Import new terms from text files \n \u2022 Add terms to favorites \n \u2022 Pass tests for memorizing the meaning of terms \n\n To contact the author of the project, you can write to the mail firdavs_20111@mail.ru</string>
+    <string name="subject">Subject</string>
+    <string name="apply">Apply</string>
+    <string name="definition">Definition</string>
+    <string name="translation">English translation</string>
+    <string name="axiom">Axiom</string>
+    <string name="your_notes">Your notes</string>
+    <string name="password">Password</string>
+    <string name="login_as_teacher">Login as a teacher</string>
+    <string name="login_as_student">Login as a student</string>
+    <string name="add">Add</string>
+    <string name="term">Term</string>
+    <string name="upload">Upload file</string>
+    <string name="language">Language</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
+</resources>

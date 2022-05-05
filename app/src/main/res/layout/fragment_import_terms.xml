@@ -28,7 +28,7 @@
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:backgroundTint="@color/white"
-        android:text="Загрузить файл"
+        android:text="@string/upload"
         android:textAllCaps="false"
         android:textColor="@color/red_500"
         app:cornerRadius="8dp"

@@ -113,9 +113,13 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                 R.id.extract_term -> Toast
                     .makeText(requireContext(), R.string.extract_terms, Toast.LENGTH_SHORT)
                     .show()
-                R.id.settings -> Toast
-                    .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
-                    .show()
+                R.id.settings -> {
+                    Toast
+                        .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
+                        .show()
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToSettingsFragment()
+                    findNavController().navigate(action)
+                }
                 R.id.import_terms -> {
                     val action = TermsListFragmentDirections.actionTermsListFragmentToImportTermsFragment()
                     findNavController().navigate(action)

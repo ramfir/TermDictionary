@@ -87,7 +87,6 @@
             app:strokeColor="@color/grey"
             app:strokeWidth="1dp" />
 
-
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

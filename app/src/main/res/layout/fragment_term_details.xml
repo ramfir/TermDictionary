@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Раздел"
+        android:hint="@string/subject"
         android:textColorHint="@color/red_500"
         app:boxStrokeColor="@color/red_500">
 
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Определение"
+        android:hint="@string/definition"
         android:textColorHint="@color/red_500"
         app:boxStrokeColor="@color/red_500">
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:text="Утверждение, которое ..."
+            android:text="@string/question"
             android:textColor="@color/red_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Перевод на английский"
+        android:hint="@string/translation"
         android:textColorHint="@color/red_500"
         app:boxStrokeColor="@color/red_500">
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:text="Axiom"
+            android:text="@string/axiom"
             android:textColor="@color/red_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Ваши пометки"
+        android:hint="@string/your_notes"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_done"
         android:textColorHint="@color/red_500">
@@ -76,7 +76,7 @@
             android:id="@+id/notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Семинар 3"
+            android:text="@string/your_notes"
             android:textColor="@color/red_500" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -20,7 +20,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Дисциплина">
+            android:hint="@string/subject">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_subject"
@@ -37,7 +37,7 @@
             app:useMaterialThemeColors="false"
             android:textSize="16sp"
             android:theme="@style/SwitchStyle"
-            android:text="Избранное"/>
+            android:text="@string/chosen"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_apply_filter"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:backgroundTint="@color/white"
-            android:text="Применить"
+            android:text="@string/apply"
             android:textAllCaps="false"
             android:textColor="@color/red_500"
             app:cornerRadius="8dp"
