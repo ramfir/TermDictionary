@@ -120,9 +120,10 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                     val action = TermsListFragmentDirections.actionTermsListFragmentToImportTermsFragment()
                     findNavController().navigate(action)
                 }
-                R.id.contact -> Toast
-                    .makeText(requireContext(), R.string.about_app, Toast.LENGTH_SHORT)
-                    .show()
+                R.id.contact -> {
+                    val action = TermsListFragmentDirections.actionTermsListFragmentToAboutAppFragment()
+                    findNavController().navigate(action)
+                }
                 R.id.logout -> {
                     val sharedPref =
                         requireActivity().getSharedPreferences(getString(R.string.preference_file_key),
