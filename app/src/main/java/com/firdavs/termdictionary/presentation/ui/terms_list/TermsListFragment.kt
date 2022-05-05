@@ -114,9 +114,6 @@ class TermsListFragment : Fragment(R.layout.fragment_terms_list) {
                     .makeText(requireContext(), R.string.extract_terms, Toast.LENGTH_SHORT)
                     .show()
                 R.id.settings -> {
-                    Toast
-                        .makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT)
-                        .show()
                     val action = TermsListFragmentDirections.actionTermsListFragmentToSettingsFragment()
                     findNavController().navigate(action)
                 }
