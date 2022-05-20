@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_done.xml" value="0.30205128205128207" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_filter.xml" value="0.30205128205128207" />
+        <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3067708333333333" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_star.xml" value="0.30205128205128207" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_star_border.xml" value="0.30205128205128207" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/drawable/ic_star_checked.xml" value="0.30205128205128207" />
@@ -32,6 +33,8 @@
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/menu/menu_nav_drawer.xml" value="0.290625" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/menu/menu_term_details.xml" value="0.290625" />
         <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/menu/menu_terms_list.xml" value="0.290625" />
+        <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3067708333333333" />
+        <entry key="..\:/Users/Firdavs/AndroidStudioProjects/TermDictionary/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3067708333333333" />
       </map>
     </option>
   </component>
